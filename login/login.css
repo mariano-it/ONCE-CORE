@@ -1,0 +1,357 @@
+/* =====================================================
+   ONCE CORE — Login CSS — Bridgerton Edition
+===================================================== */
+
+:root {
+  --cream:      #fdf6ec;
+  --parchment:  #f5ead6;
+  --gold:       #c9a84c;
+  --gold-light: #e8c97a;
+  --gold-dark:  #9b7a2f;
+  --navy:       #1a2744;
+  --navy-mid:   #243156;
+  --sage:       #7a9e8e;
+  --blush:      #e8c5c5;
+  --blush-dark: #c8958d;
+  --text-main:  #2c1f14;
+  --text-muted: #7a6a55;
+
+  --font-display: 'Cinzel', serif;
+  --font-body:    'Cormorant Garamond', serif;
+  --font-ui:      'Lato', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-body);
+  color: var(--text-main);
+}
+
+/* ─── BG ORNAMENTS ─── */
+.bg-ornament {
+  position: fixed;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.bg-ornament.top-left {
+  top: -180px; left: -180px;
+  background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 65%);
+}
+.bg-ornament.bottom-right {
+  bottom: -180px; right: -180px;
+  background: radial-gradient(circle, rgba(200,149,141,0.1) 0%, transparent 65%);
+}
+
+/* ─── LAYOUT ─── */
+body {
+  display: flex;
+  position: relative;
+}
+
+/* ─── PANEL IZQUIERDO ─── */
+.panel-left {
+  flex: 1;
+  background: linear-gradient(160deg, var(--navy) 0%, #0d1728 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* patrón diamante sutil */
+.panel-left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(201,168,76,0.04) 0px,
+    rgba(201,168,76,0.04) 1px,
+    transparent 1px,
+    transparent 16px
+  );
+  pointer-events: none;
+}
+
+/* marco decorativo esquinas */
+.panel-left::after {
+  content: '';
+  position: absolute;
+  inset: 24px;
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.panel-left-inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 360px;
+}
+
+.panel-ornament {
+  font-size: 18px;
+  color: var(--gold);
+  letter-spacing: .4em;
+  margin-bottom: 20px;
+  opacity: .8;
+  animation: fadeUp .8s ease both;
+}
+
+.panel-title {
+  font-family: var(--font-display);
+  font-size: 42px;
+  letter-spacing: .2em;
+  color: white;
+  line-height: 1;
+  margin-bottom: 12px;
+  animation: fadeUp .8s .1s ease both;
+}
+
+.panel-tagline {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 17px;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 32px;
+  animation: fadeUp .8s .2s ease both;
+}
+
+.panel-divider {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 0 auto 28px;
+  animation: fadeUp .8s .25s ease both;
+}
+
+.panel-quote {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 15px;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.7;
+  animation: fadeUp .8s .3s ease both;
+}
+
+/* ─── PANEL DERECHO ─── */
+.panel-right {
+  width: 460px;
+  min-width: 460px;
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 36px;
+  position: relative;
+  z-index: 1;
+  overflow-y: auto;
+  background-image:
+    radial-gradient(ellipse at 90% 10%, rgba(232,201,122,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 10% 90%, rgba(232,197,197,0.1) 0%, transparent 50%);
+}
+
+.form-card {
+  width: 100%;
+  max-width: 360px;
+  animation: fadeUp .6s .15s ease both;
+}
+
+/* Mobile brand */
+.mobile-brand {
+  display: none;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.mobile-ornament {
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: .3em;
+  margin-bottom: 6px;
+}
+.mobile-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  letter-spacing: .18em;
+  color: var(--navy);
+}
+
+/* ─── TABS ─── */
+.tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 28px;
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+}
+
+.tab {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 12px 8px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: .1em;
+  color: var(--text-muted);
+  cursor: pointer;
+  position: relative;
+  transition: color .2s;
+}
+.tab::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform .25s ease;
+}
+.tab:hover { color: var(--navy); }
+.tab.active {
+  color: var(--navy);
+}
+.tab.active::after {
+  transform: scaleX(1);
+}
+
+/* ─── FORM ─── */
+.form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: fadeUp .4s ease both;
+}
+.form-body.hidden { display: none; }
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.field-input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 8px;
+  background: rgba(245,234,214,0.35);
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--text-main);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s, background .2s;
+}
+.field-input::placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+}
+.field-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+  background: rgba(245,234,214,0.55);
+}
+.field-input.error {
+  border-color: var(--blush-dark);
+  box-shadow: 0 0 0 3px rgba(200,149,141,0.12);
+}
+.field-input.success {
+  border-color: var(--sage);
+}
+
+/* password toggle */
+.toggle-pass {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: .4;
+  transition: opacity .15s;
+  padding: 4px;
+}
+.toggle-pass:hover { opacity: .8; }
+
+/* Status message */
+.status-msg {
+  min-height: 18px;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: .06em;
+  text-align: center;
+  transition: all .2s;
+}
+.status-msg.error   { color: var(--blush-dark); }
+.status-msg.success { color: var(--sage); }
+
+/* Primary button */
+.primary-btn {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+  color: var(--gold-light);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: .12em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: transform .15s, box-shadow .2s;
+  margin-top: 4px;
+}
+.primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(26,39,68,0.28);
+}
+.primary-btn:active { transform: translateY(0); }
+.primary-btn:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+  transform: none;
+}
+.btn-icon { font-size: 12px; }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 780px) {
+  body { flex-direction: column; overflow: auto; }
+  .panel-left { display: none; }
+  .panel-right {
+    width: 100%;
+    min-width: unset;
+    min-height: 100vh;
+    padding: 40px 24px;
+  }
+  .mobile-brand { display: block; }
+}

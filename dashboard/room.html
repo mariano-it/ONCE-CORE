@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salón — Once Core</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="room.css">
+<link rel="stylesheet" href="themes.css">
+</head>
+<body>
+
+<div class="bg-ornament top-right"></div>
+<div class="bg-ornament bottom-left"></div>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <button class="back-btn" id="backBtn">
+    <span>←</span> Salas
+  </button>
+  <div class="topbar-center">
+    <div class="room-label">Salón</div>
+    <div class="room-title" id="roomName">—</div>
+  </div>
+  <div class="topbar-right">
+    <div class="session-timer" id="sessionTimer">0 min</div>
+    <div class="timer-label">en sesión</div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="main-wrap">
+
+  <!-- FOCUS ACTIONS -->
+  <div class="actions-banner">
+    <div class="actions-inner">
+      <div class="actions-label">
+        <span class="actions-ornament">❧</span>
+        Tu estado actual
+        <span class="actions-ornament">❧</span>
+      </div>
+      <div class="current-status-display">
+        <span class="current-status-dot" id="myStatusDot"></span>
+        <span class="current-status-text" id="myStatusText">Inactiva</span>
+      </div>
+      <div class="actions-btns">
+        <button class="action-btn focus-btn" id="focusBtn">
+          <span class="btn-icon">◈</span>
+          Iniciar Enfoque
+        </button>
+        <button class="action-btn break-btn" id="breakBtn">
+          <span class="btn-icon">◇</span>
+          Tomar Descanso
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEMBERS -->
+  <div class="members-section">
+    <div class="section-header">
+      <span class="sh-line"></span>
+      <h2 class="section-title">Presentes en el salón</h2>
+      <span class="sh-line"></span>
+    </div>
+    <div id="usersList" class="users-grid"></div>
+  </div>
+
+  <!-- TAREAS WIDGET -->
+  <div class="members-section" style="margin-top:8px">
+    <div class="section-header">
+      <span class="sh-line"></span>
+      <h2 class="section-title">Tablón de Tareas</h2>
+      <span class="sh-line"></span>
+    </div>
+    <div class="sala-tareas-widget">
+      <div id="salaTareasList">Cargando...</div>
+      <div style="text-align:center;margin-top:12px">
+        <button onclick="window.location.href='tareas.html'"
+          style="background:none;border:1px solid rgba(201,168,76,0.3);border-radius:20px;padding:6px 18px;font-family:var(--font-display);font-size:11px;letter-spacing:.08em;color:var(--gold-dark);cursor:pointer;transition:all .2s"
+          onmouseover="this.style.background='rgba(201,168,76,0.1)'"
+          onmouseout="this.style.background='none'">
+          Ver todas las tareas →
+        </button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script src="themes.js"></script>
+<script src="room.js"></script>
+</body>
+</html>

@@ -1,0 +1,691 @@
+/* =====================================================
+   ONCE CORE — Tareas CSS — Bridgerton Aesthetic
+===================================================== */
+
+/* ─── PAGE HEADER ─── */
+.tareas-page-header {
+  text-align: center;
+  padding: 8px 0 4px;
+}
+.page-ornament {
+  font-size: 18px;
+  color: var(--gold);
+  letter-spacing: .3em;
+  opacity: .8;
+  margin-bottom: 10px;
+}
+.page-heading {
+  font-family: var(--font-display);
+  font-size: 26px;
+  letter-spacing: .14em;
+  color: var(--navy);
+}
+.page-sub {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.page-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 16px auto 0;
+  max-width: 320px;
+}
+
+/* ─── NUEVA TAREA FORM ─── */
+.nueva-tarea-card {
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.nt-header {
+  background: linear-gradient(135deg, var(--navy), #1e3760);
+  padding: 14px 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nt-icon {
+  color: var(--gold);
+  font-size: 13px;
+}
+.nt-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: .1em;
+  color: var(--gold-light);
+}
+.nt-body {
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.nt-input {
+  width: 100%;
+  background: rgba(245,234,214,0.4);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text-main);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.nt-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+}
+.nt-input::placeholder { color: var(--text-muted); font-style: italic; }
+.nt-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.nt-half { width: 100%; }
+.nt-textarea {
+  width: 100%;
+  background: rgba(245,234,214,0.4);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-main);
+  resize: none;
+  outline: none;
+  transition: border-color .2s;
+}
+.nt-textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+}
+.nt-textarea::placeholder { color: var(--text-muted); font-style: italic; }
+
+.nt-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.nt-priority-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.nt-label {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.priority-btn {
+  background: none;
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all .2s;
+  letter-spacing: .04em;
+}
+.priority-btn:hover { border-color: var(--gold); color: var(--gold-dark); }
+.priority-btn.active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--gold-light);
+}
+.priority-btn[data-p="alta"].active { background: #7c4a00; border-color: #7c4a00; }
+.priority-btn[data-p="urgente"].active { background: #6b1010; border-color: #6b1010; }
+
+.publish-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: .08em;
+  color: var(--navy);
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  white-space: nowrap;
+}
+.publish-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(201,168,76,0.35);
+}
+.publish-btn:active { transform: translateY(0); }
+
+/* ─── TABS ─── */
+.tabs-row {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  position: relative;
+}
+.tab-btn {
+  background: none;
+  border: none;
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: color .2s;
+  position: relative;
+}
+.tab-btn.active {
+  color: var(--navy);
+}
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 2px 2px 0 0;
+}
+
+/* ─── GRID DE TAREAS ─── */
+.tareas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  padding-bottom: 32px;
+  min-height: 120px;
+}
+
+/* ─── TARJETA DE TAREA ─── */
+.tarea-card {
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: var(--radius);
+  padding: 0;
+  box-shadow: 0 4px 20px rgba(28,18,8,0.07);
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.tarea-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(28,18,8,0.12);
+}
+
+/* Barra superior de prioridad */
+.tarea-priority-bar {
+  height: 3px;
+  width: 100%;
+}
+.tarea-priority-bar.normal  { background: var(--sage); }
+.tarea-priority-bar.alta    { background: #d97706; }
+.tarea-priority-bar.urgente { background: #dc2626; animation: pulse-bar 1.5s ease infinite; }
+
+@keyframes pulse-bar {
+  0%,100% { opacity: 1; } 50% { opacity: .5; }
+}
+
+.tarea-body {
+  padding: 16px 18px 14px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tarea-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tarea-subject-badge {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.25);
+  color: var(--gold-dark);
+  padding: 2px 10px;
+  border-radius: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 130px;
+}
+.priority-tag {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+.priority-tag.normal  { background: rgba(122,158,142,0.15); color: var(--sage); }
+.priority-tag.alta    { background: rgba(217,119,6,0.1);   color: #b45309; }
+.priority-tag.urgente { background: rgba(220,38,38,0.1);   color: #b91c1c; }
+
+.tarea-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: .05em;
+  color: var(--navy);
+  line-height: 1.3;
+}
+.tarea-desc {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.tarea-due {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  letter-spacing: .06em;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+}
+.tarea-due.vence-hoy   { color: #b45309; }
+.tarea-due.vencida     { color: #b91c1c; text-decoration: line-through; }
+
+/* Author row */
+.tarea-author-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: rgba(245,234,214,0.3);
+  border-top: 1px solid rgba(201,168,76,0.1);
+}
+.tarea-author-avatar {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(201,168,76,0.3);
+  flex-shrink: 0;
+}
+.tarea-author-info {
+  flex: 1;
+  min-width: 0;
+}
+.tarea-author-name {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--navy);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tarea-family-tag {
+  font-family: var(--font-ui);
+  font-size: 8px;
+  letter-spacing: .1em;
+  padding: 1px 7px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+/* Acciones */
+.tarea-actions {
+  display: flex;
+  gap: 8px;
+  padding: 10px 18px 14px;
+}
+.tarea-action-btn {
+  flex: 1;
+  background: none;
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all .2s;
+}
+.tarea-action-btn:hover {
+  border-color: var(--gold);
+  color: var(--navy);
+  background: rgba(201,168,76,0.07);
+}
+.tarea-action-btn.btn-suerte:hover {
+  border-color: #f59e0b;
+  background: rgba(245,158,11,0.07);
+  color: #92400e;
+}
+.tarea-action-btn.btn-ayuda:hover {
+  border-color: var(--sage);
+  background: rgba(122,158,142,0.07);
+  color: #1a5c47;
+}
+.action-count {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  background: rgba(201,168,76,0.15);
+  border-radius: 8px;
+  padding: 1px 6px;
+  color: var(--gold-dark);
+}
+
+/* Badge "tuya" */
+.tarea-own-badge {
+  position: absolute;
+  top: 10px; right: 12px;
+  font-family: var(--font-ui);
+  font-size: 8px;
+  letter-spacing: .12em;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: rgba(26,39,68,0.07);
+  color: var(--navy);
+  border: 1px solid rgba(26,39,68,0.15);
+}
+
+/* Botón eliminar (propia) */
+.tarea-delete-btn {
+  background: none;
+  border: none;
+  color: rgba(185,28,28,0.4);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color .2s, background .2s;
+  line-height: 1;
+}
+.tarea-delete-btn:hover {
+  color: #b91c1c;
+  background: rgba(220,38,38,0.07);
+}
+
+/* Empty state */
+.tareas-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: .7;
+}
+.tareas-empty .empty-ornament { font-size: 22px; color: var(--gold); opacity: .5; }
+
+/* ─── MODAL APOYO ─── */
+.apoyo-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(12,10,8,0.65);
+  backdrop-filter: blur(5px);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+.apoyo-overlay.show { display: flex; }
+
+.apoyo-card {
+  background: var(--cream);
+  border: 1px solid rgba(201,168,76,0.35);
+  border-radius: 20px;
+  padding: 36px 32px 32px;
+  max-width: 360px;
+  width: 92%;
+  box-shadow: 0 24px 64px rgba(28,18,8,0.22);
+  position: relative;
+  text-align: center;
+  animation: modalIn .3s ease;
+}
+.apoyo-floral {
+  font-size: 16px;
+  color: var(--gold);
+  letter-spacing: .3em;
+  opacity: .8;
+  margin-bottom: 16px;
+}
+.apoyo-avatar {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+  object-fit: cover;
+  box-shadow: 0 0 18px rgba(201,168,76,0.25);
+  margin-bottom: 10px;
+}
+.apoyo-nombre {
+  font-family: var(--font-display);
+  font-size: 17px;
+  letter-spacing: .08em;
+  color: var(--navy);
+}
+.apoyo-tarea-title {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  padding: 0 10px;
+  line-height: 1.4;
+}
+.apoyo-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 18px 0;
+}
+
+/* Botones apoyo */
+.apoyo-btn {
+  width: 100%;
+  background: rgba(245,234,214,0.5);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--navy);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all .2s;
+  margin-bottom: 10px;
+  letter-spacing: .03em;
+}
+.apoyo-btn-emoji { font-size: 20px; }
+.suerte-btn:hover {
+  background: rgba(245,158,11,0.12);
+  border-color: #f59e0b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245,158,11,0.2);
+}
+.ayuda-btn:hover {
+  background: rgba(122,158,142,0.1);
+  border-color: var(--sage);
+  transform: translateY(-2px);
+}
+
+/* Ayuda form */
+.ayuda-form {
+  margin-top: -2px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ayuda-form.hidden { display: none; }
+.ayuda-textarea {
+  width: 100%;
+  background: rgba(245,234,214,0.4);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-main);
+  resize: none;
+  outline: none;
+  transition: border-color .2s;
+}
+.ayuda-textarea:focus { border-color: var(--gold); }
+.ayuda-textarea::placeholder { color: var(--text-muted); font-style: italic; }
+.send-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: .08em;
+  color: var(--navy);
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+}
+.send-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(201,168,76,0.3);
+}
+
+/* Confirmación animada */
+.apoyo-confirm {
+  text-align: center;
+  padding: 8px 0;
+  animation: confirmIn .4s ease;
+}
+.apoyo-confirm.hidden { display: none; }
+.confirm-emoji {
+  font-size: 40px;
+  animation: bounceIn .5s cubic-bezier(.36,.07,.19,.97);
+  margin-bottom: 8px;
+}
+.confirm-text {
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: .1em;
+  color: var(--navy);
+}
+@keyframes confirmIn {
+  from { opacity: 0; transform: scale(.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes bounceIn {
+  0%   { transform: scale(0.3); }
+  50%  { transform: scale(1.2); }
+  80%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+/* ─── CANVAS PARTÍCULAS ─── */
+.lucky-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 300;
+  display: none;
+}
+
+/* ─── TOAST ─── */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--navy);
+  color: var(--gold-light);
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: .07em;
+  padding: 10px 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(201,168,76,0.3);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+  z-index: 400;
+  animation: toastIn .3s ease;
+}
+.toast.hidden { display: none; }
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ─── CARD FULL WIDTH CALENDAR ─── */
+.card-calendar {
+  grid-column: 1 / -1;
+}
+
+/* ─── MINI WIDGET EN SALA ─── */
+.sala-tareas-widget {
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+.sala-tareas-title {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: .1em;
+  color: var(--navy);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sala-tarea-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+}
+.sala-tarea-item:last-child { border-bottom: none; }
+.sala-tarea-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.sala-tarea-name {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-main);
+  flex: 1;
+}
+.sala-tarea-mini-btn {
+  background: none;
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all .15s;
+}
+.sala-tarea-mini-btn:hover {
+  border-color: var(--gold);
+  color: var(--navy);
+}

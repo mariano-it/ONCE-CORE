@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hub — Once Core</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="dashboard.css">
+<link rel="stylesheet" href="hub.css">
+</head>
+<body>
+
+<div class="bg-ornament top-left"></div>
+<div class="bg-ornament bottom-right"></div>
+
+<div class="dashboard">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+      <div class="sidebar-crest">
+        <div class="crest-ring">
+          <img id="sidebarAvatar" class="sidebar-avatar" src="https://via.placeholder.com/80">
+        </div>
+        <div class="sidebar-name" id="sidebarName">Cargando...</div>
+        <div class="sidebar-campus" id="sidebarCampus">Campus</div>
+        <div class="status-badge">
+          <span class="status-dot online"></span>
+          <span class="status-text" id="statusText">Online</span>
+        </div>
+      </div>
+      <div class="sidebar-divider"><span class="divider-flower">✿</span></div>
+      <nav class="sidebar-menu">
+        <button class="menu-btn" id="dashBtn"><span class="menu-icon">❧</span> Inicio</button>
+        <button class="menu-btn" id="roomsBtn"><span class="menu-icon">❧</span> Salas</button>
+        <button class="menu-btn" id="tareasBtn"><span class="menu-icon">❧</span> Tareas</button>
+        <button class="menu-btn" id="hubBtn"><span class="menu-icon">❧</span> Hub Anáhuac</button>
+        <button class="menu-btn" id="conversorBtn"><span class="menu-icon">❧</span> Convertidor</button>
+        <button class="menu-btn" id="mapBtn"><span class="menu-icon">❧</span> Mapa del Campus</button>
+        <button class="menu-btn" id="settingsBtn"><span class="menu-icon">❧</span> Configuración</button>
+      </nav>
+      <div class="sidebar-divider"><span class="divider-flower">✿</span></div>
+      <button class="menu-btn logout" id="logoutBtn"><span class="menu-icon">✦</span> Cerrar Sesión</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="brand-lockup">
+          <div class="brand-subtitle">Temporada 2025</div>
+          <h1 class="brand-title">ONCE CORE</h1>
+        </div>
+        <div class="welcome-text">Hub Universitario</div>
+      </div>
+      <div class="topbar-right">
+        <div class="clock-block">
+          <div id="liveClock" class="live-clock">00:00</div>
+          <div class="clock-label">hora local</div>
+        </div>
+        <button class="profile-btn" id="profileBtn">
+          <img id="topbarAvatar" class="topbar-avatar" src="https://via.placeholder.com/38">
+        </button>
+      </div>
+    </header>
+
+    <div class="main-content">
+
+      <!-- HEADER -->
+      <div class="hub-header">
+        <div class="hub-ornament">❧ ✦ ❧</div>
+        <h2 class="hub-heading">Hub Anáhuac</h2>
+        <p class="hub-sub">Accede a todas tus plataformas universitarias desde un solo lugar</p>
+        <div class="hub-rule"></div>
+      </div>
+
+      <!-- PLATAFORMAS PRINCIPALES -->
+      <div class="hub-section">
+        <div class="hub-section-label">
+          <span class="hsl-line"></span>
+          <span class="hsl-text">Plataformas principales</span>
+          <span class="hsl-line"></span>
+        </div>
+        <div class="hub-grid main-grid">
+
+          <a class="hub-card featured" href="https://siu.anahuac.mx" target="_blank" rel="noopener">
+            <div class="hc-glow" style="--glow:#c9a84c"></div>
+            <div class="hc-icon-wrap" style="background:linear-gradient(135deg,#1a2744,#2d4178)">
+              <span class="hc-icon">🎓</span>
+            </div>
+            <div class="hc-info">
+              <div class="hc-name">SIU</div>
+              <div class="hc-desc">Sistema de Información Universitaria · Inscripciones, kardex, trámites</div>
+            </div>
+            <div class="hc-arrow">→</div>
+          </a>
+
+          <a class="hub-card featured" href="https://anahuac.brightspace.com" target="_blank" rel="noopener">
+            <div class="hc-glow" style="--glow:#0d6efd"></div>
+            <div class="hc-icon-wrap" style="background:linear-gradient(135deg,#0a3d6b,#1565c0)">
+              <span class="hc-icon">📚</span>
+            </div>
+            <div class="hc-info">
+              <div class="hc-name">Brightspace</div>
+              <div class="hc-desc">D2L · Cursos, materiales, entregas y calificaciones en línea</div>
+            </div>
+            <div class="hc-arrow">→</div>
+          </a>
+
+          <a class="hub-card featured" href="https://outlook.office.com" target="_blank" rel="noopener">
+            <div class="hc-glow" style="--glow:#0078d4"></div>
+            <div class="hc-icon-wrap" style="background:linear-gradient(135deg,#004578,#0078d4)">
+              <span class="hc-icon">✉️</span>
+            </div>
+            <div class="hc-info">
+              <div class="hc-name">Correo Institucional</div>
+              <div class="hc-desc">Outlook · Tu correo @anahuac.mx para comunicaciones oficiales</div>
+            </div>
+            <div class="hc-arrow">→</div>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- MICROSOFT 365 -->
+      <div class="hub-section">
+        <div class="hub-section-label">
+          <span class="hsl-line"></span>
+          <span class="hsl-text">Microsoft 365</span>
+          <span class="hsl-line"></span>
+        </div>
+        <div class="hub-grid mini-grid">
+
+          <a class="hub-card mini" href="https://teams.microsoft.com" target="_blank" rel="noopener">
+            <div class="hc-mini-icon" style="background:linear-gradient(135deg,#4b45a0,#6264a7)">💬</div>
+            <div class="hc-mini-name">Teams</div>
+            <div class="hc-mini-desc">Clases y videollamadas</div>
+          </a>
+
+          <a class="hub-card mini" href="https://office.com/launch/word" target="_blank" rel="noopener">
+            <div class="hc-mini-icon" style="background:linear-gradient(135deg,#185abd,#2b7cd3)">📝</div>
+            <div class="hc-mini-name">Word</div>
+            <div class="hc-mini-desc">Documentos en línea</div>
+          </a>
+
+          <a class="hub-card mini" href="https://office.com/launch/powerpoint" target="_blank" rel="noopener">
+            <div class="hc-mini-icon" style="background:linear-gradient(135deg,#b7472a,#d04e0f)">📊</div>
+            <div class="hc-mini-name">PowerPoint</div>
+            <div class="hc-mini-desc">Presentaciones</div>
+          </a>
+
+          <a class="hub-card mini" href="https://office.com/launch/excel" target="_blank" rel="noopener">
+            <div class="hc-mini-icon" style="background:linear-gradient(135deg,#107c41,#21a366)">📈</div>
+            <div class="hc-mini-name">Excel</div>
+            <div class="hc-mini-desc">Hojas de cálculo</div>
+          </a>
+
+          <a class="hub-card mini" href="https://onedrive.live.com" target="_blank" rel="noopener">
+            <div class="hc-mini-icon" style="background:linear-gradient(135deg,#0364b8,#0078d4)">☁️</div>
+            <div class="hc-mini-name">OneDrive</div>
+            <div class="hc-mini-desc">Almacenamiento cloud</div>
+          </a>
+
+          <a class="hub-card mini" href="https://forms.office.com" target="_blank" rel="noopener">
+            <div class="hc-mini-icon" style="background:linear-gradient(135deg,#008272,#00b294)">📋</div>
+            <div class="hc-mini-name">Forms</div>
+            <div class="hc-mini-desc">Encuestas y cuestionarios</div>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- RECURSOS ACADÉMICOS -->
+      <div class="hub-section">
+        <div class="hub-section-label">
+          <span class="hsl-line"></span>
+          <span class="hsl-text">Recursos académicos</span>
+          <span class="hsl-line"></span>
+        </div>
+        <div class="hub-grid mini-grid">
+
+          <a class="hub-card mini" href="https://biblioteca.anahuac.mx" target="_blank" rel="noopener">
+            <div class="hc-mini-icon" style="background:linear-gradient(135deg,#5c1a0f,#8b3a2a)">📖</div>
+            <div class="hc-mini-name">Biblioteca</div>
+            <div class="hc-mini-desc">Acervo digital y físico</div>
+          </a>
+
+          <a class="hub-card mini" href="https://scholar.google.com" target="_blank" rel="noopener">
+            <div class="hc-mini-icon" style="background:linear-gradient(135deg,#1a3a5c,#2d6a9f)">🔬</div>
+            <div class="hc-mini-name">Google Scholar</div>
+            <div class="hc-mini-desc">Artículos científicos</div>
+          </a>
+
+          <a class="hub-card mini" href="https://www.canva.com" target="_blank" rel="noopener">
+            <div class="hc-mini-icon" style="background:linear-gradient(135deg,#00c4b4,#009c94)">🎨</div>
+            <div class="hc-mini-name">Canva</div>
+            <div class="hc-mini-desc">Diseño de presentaciones</div>
+          </a>
+
+          <a class="hub-card mini" href="https://chat.openai.com" target="_blank" rel="noopener">
+            <div class="hc-mini-icon" style="background:linear-gradient(135deg,#10a37f,#1a7a60)">🤖</div>
+            <div class="hc-mini-name">ChatGPT</div>
+            <div class="hc-mini-desc">Asistente de estudio</div>
+          </a>
+
+          <a class="hub-card mini" href="https://www.notion.so" target="_blank" rel="noopener">
+            <div class="hc-mini-icon" style="background:linear-gradient(135deg,#1a1a1a,#3d3d3d)">🗒️</div>
+            <div class="hc-mini-name">Notion</div>
+            <div class="hc-mini-desc">Notas y organización</div>
+          </a>
+
+          <a class="hub-card mini conversor-shortcut" href="conversor.html">
+            <div class="hc-mini-icon" style="background:linear-gradient(135deg,var(--gold-dark),var(--gold))">⚡</div>
+            <div class="hc-mini-name">Convertidor</div>
+            <div class="hc-mini-desc">PDF · DOC · IMG · RAW</div>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- ACCESO RÁPIDO PERSONALIZADO -->
+      <div class="hub-section">
+        <div class="hub-section-label">
+          <span class="hsl-line"></span>
+          <span class="hsl-text">Accesos rápidos personalizados</span>
+          <span class="hsl-line"></span>
+        </div>
+        <div id="customLinks" class="hub-grid mini-grid"></div>
+        <div class="add-link-row">
+          <button id="addLinkBtn" class="add-link-btn">
+            <span>✦</span> Agregar enlace propio
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- MODAL AGREGAR ENLACE -->
+<div id="addLinkModal" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-floral-top">❧ ✦ ❧</div>
+    <button id="closeAddLink" class="modal-close">✕</button>
+    <h3 style="font-family:var(--font-display);font-size:16px;letter-spacing:.1em;color:var(--navy);margin-bottom:20px">Nuevo acceso rápido</h3>
+    <input id="linkName" class="nt-input" type="text" placeholder="Nombre (ej: Tutoría)" maxlength="30" autocomplete="off" style="margin-bottom:12px">
+    <input id="linkUrl" class="nt-input" type="url" placeholder="URL (ej: https://...)" autocomplete="off" style="margin-bottom:12px">
+    <input id="linkEmoji" class="nt-input" type="text" placeholder="Emoji (ej: 🔗)" maxlength="4" autocomplete="off" style="margin-bottom:20px">
+    <button id="saveLinkBtn" class="publish-btn" style="width:100%">Guardar ✦</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast hidden"></div>
+
+<script src="themes.js"></script>
+<script src="hub.js"></script>
+</body>
+</html>

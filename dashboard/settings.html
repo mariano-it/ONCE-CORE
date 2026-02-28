@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configuración — Once Core</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="settings.css">
+<link rel="stylesheet" href="themes.css">
+</head>
+<body>
+
+<div class="bg-ornament top-right"></div>
+<div class="bg-ornament bottom-left"></div>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <button class="back-btn" onclick="window.location.href='dashboard.html'">
+    <span>←</span> Dashboard
+  </button>
+  <div class="topbar-brand">
+    <span class="brand-sub">Once Core</span>
+    <span class="brand-title">CONFIGURACIÓN</span>
+  </div>
+  <div class="topbar-meta" id="topbarName">—</div>
+</header>
+
+<main class="main-wrap">
+
+  <!-- ══════════════════════════════
+       SECCIÓN 1 — PERFIL
+  ══════════════════════════════ -->
+  <section class="settings-section" id="section-profile">
+
+    <div class="section-header">
+      <div class="section-ornament">❧ ✦ ❧</div>
+      <h2 class="section-title">Tu Perfil</h2>
+      <p class="section-subtitle">Así te verán las demás en las salas</p>
+    </div>
+
+    <!-- Avatar preview -->
+    <div class="avatar-block">
+      <div class="avatar-ring">
+        <img id="avatarPreview" class="avatar-img" src="https://via.placeholder.com/100" alt="Avatar">
+      </div>
+      <div class="avatar-hint">Vista previa</div>
+    </div>
+
+    <div class="form-grid">
+
+      <div class="form-field">
+        <label class="field-label" for="inputName">Nombre</label>
+        <input id="inputName" class="field-input" type="text" placeholder="¿Cómo te llamas?">
+        <div class="name-preview-wrap">
+          <span class="name-preview-label">Vista previa:</span>
+          <span id="namePreview" class="name-preview-text">—</span>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label class="field-label">Foto de perfil</label>
+        <label class="file-upload-label" for="inputAvatar">
+          <span class="file-upload-icon">✦</span>
+          <span class="file-upload-text" id="fileUploadText">Seleccionar imagen…</span>
+          <span class="file-upload-hint">PNG · JPG · WEBP</span>
+        </label>
+        <input id="inputAvatar" class="file-input-hidden" type="file" accept="image/png,image/jpeg,image/webp,image/gif">
+      </div>
+
+      <div class="form-field">
+        <label class="field-label" for="inputCampus">Campus</label>
+        <select id="inputCampus" class="field-input field-select">
+          <option value="">Selecciona tu campus</option>
+          <option value="Anáhuac Mayab">Anáhuac Mayab</option>
+          <option value="Anáhuac México">Anáhuac México</option>
+          <option value="Anáhuac Cancún">Anáhuac Cancún</option>
+          <option value="Anáhuac Puebla">Anáhuac Puebla</option>
+          <option value="Anáhuac Oaxaca">Anáhuac Oaxaca</option>
+          <option value="Anáhuac Norte">Anáhuac Norte</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label class="field-label" for="inputCarrera">Carrera</label>
+        <input id="inputCarrera" class="field-input" type="text" placeholder="Ej. Ingeniería en Sistemas">
+      </div>
+
+      <div class="form-field">
+        <label class="field-label" for="inputSemestre">Semestre</label>
+        <select id="inputSemestre" class="field-input field-select">
+          <option value="">Selecciona tu semestre</option>
+          <option value="1°">1° Semestre</option>
+          <option value="2°">2° Semestre</option>
+          <option value="3°">3° Semestre</option>
+          <option value="4°">4° Semestre</option>
+          <option value="5°">5° Semestre</option>
+          <option value="6°">6° Semestre</option>
+          <option value="7°">7° Semestre</option>
+          <option value="8°">8° Semestre</option>
+          <option value="9°">9° Semestre</option>
+          <option value="10°">10° Semestre</option>
+        </select>
+      </div>
+
+      <div class="form-field full-width">
+        <label class="field-label">Tu Familia</label>
+        <div class="family-selector" id="familySelector"></div>
+      </div>
+
+    </div>
+
+    <button class="save-btn" id="saveProfileBtn">
+      <span class="save-icon">✦</span> Guardar Perfil
+    </button>
+
+    <div class="save-toast" id="profileToast">✓ Perfil guardado</div>
+
+  </section>
+
+  <!-- ══════════════════════════════
+       SECCIÓN 2 — HORARIO
+  ══════════════════════════════ -->
+  <section class="settings-section" id="section-schedule">
+
+    <div class="section-header">
+      <div class="section-ornament">❧ ✦ ❧</div>
+      <h2 class="section-title">Horario de Clases</h2>
+      <p class="section-subtitle">Tu calendario aparecerá en el dashboard</p>
+    </div>
+
+    <!-- Formulario agregar materia -->
+    <div class="schedule-form-card">
+      <div class="schedule-form-title">
+        <span class="sf-icon">◈</span> Agregar materia
+      </div>
+
+      <div class="schedule-form-grid">
+
+        <div class="form-field full-width">
+          <label class="field-label" for="subjectName">Nombre de la materia</label>
+          <input id="subjectName" class="field-input" type="text" placeholder="Ej. Cálculo Diferencial">
+        </div>
+
+        <div class="form-field">
+          <label class="field-label" for="subjectStart">Hora inicio</label>
+          <input id="subjectStart" class="field-input" type="time">
+        </div>
+
+        <div class="form-field">
+          <label class="field-label" for="subjectEnd">Hora fin</label>
+          <input id="subjectEnd" class="field-input" type="time">
+        </div>
+
+        <div class="form-field full-width">
+          <label class="field-label">Días</label>
+          <div class="days-picker" id="daysPicker">
+            <button class="day-btn" data-day="Lun">L</button>
+            <button class="day-btn" data-day="Mar">M</button>
+            <button class="day-btn" data-day="Mié">X</button>
+            <button class="day-btn" data-day="Jue">J</button>
+            <button class="day-btn" data-day="Vie">V</button>
+            <button class="day-btn" data-day="Sáb">S</button>
+          </div>
+        </div>
+
+        <div class="form-field full-width">
+          <label class="field-label" for="subjectColor">Color identificador</label>
+          <div class="color-picker" id="colorPicker">
+            <button class="color-opt active" data-color="#0d9488" style="background:#0d9488"></button>
+            <button class="color-opt" data-color="#c9a84c" style="background:#c9a84c"></button>
+            <button class="color-opt" data-color="#c8958d" style="background:#c8958d"></button>
+            <button class="color-opt" data-color="#7a9e8e" style="background:#7a9e8e"></button>
+            <button class="color-opt" data-color="#6366f1" style="background:#6366f1"></button>
+            <button class="color-opt" data-color="#1a2744" style="background:#1a2744"></button>
+          </div>
+        </div>
+
+      </div>
+
+      <button class="add-subject-btn" id="addSubjectBtn">
+        + Agregar materia
+      </button>
+    </div>
+
+    <!-- Lista de materias guardadas -->
+    <div class="subjects-list" id="subjectsList"></div>
+
+    <div class="save-toast" id="scheduleToast">✓ Horario guardado</div>
+
+  </section>
+
+</main>
+
+  <!-- ══════════════════════════════
+       SECCIÓN 3 — TEMAS
+  ══════════════════════════════ -->
+  <section class="settings-section" id="section-themes">
+
+    <div class="section-header">
+      <div class="section-ornament">❧ ✦ ❧</div>
+      <h2 class="section-title">Tu Familia</h2>
+      <p class="section-subtitle">Elige el tema que represente tu espíritu esta temporada</p>
+    </div>
+
+    <div id="themeSelectorContainer"></div>
+
+  </section>
+
+</main>
+
+<script src="themes.js"></script>
+<script src="settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convertidor — Once Core</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="dashboard.css">
+<link rel="stylesheet" href="conversor.css">
+<!-- PDF.js para leer PDFs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<!-- jsPDF para crear PDFs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- JSZip para empaquetar múltiples archivos -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+
+<div class="bg-ornament top-left"></div>
+<div class="bg-ornament bottom-right"></div>
+
+<div class="dashboard">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+      <div class="sidebar-crest">
+        <div class="crest-ring">
+          <img id="sidebarAvatar" class="sidebar-avatar" src="https://via.placeholder.com/80">
+        </div>
+        <div class="sidebar-name" id="sidebarName">Cargando...</div>
+        <div class="sidebar-campus" id="sidebarCampus">Campus</div>
+        <div class="status-badge">
+          <span class="status-dot online"></span>
+          <span class="status-text">Online</span>
+        </div>
+      </div>
+      <div class="sidebar-divider"><span class="divider-flower">✿</span></div>
+      <nav class="sidebar-menu">
+        <button class="menu-btn" id="dashBtn"><span class="menu-icon">❧</span> Inicio</button>
+        <button class="menu-btn" id="roomsBtn"><span class="menu-icon">❧</span> Salas</button>
+        <button class="menu-btn" id="tareasBtn"><span class="menu-icon">❧</span> Tareas</button>
+        <button class="menu-btn" id="hubBtn"><span class="menu-icon">❧</span> Hub Anáhuac</button>
+        <button class="menu-btn" id="conversorBtn"><span class="menu-icon">❧</span> Convertidor</button>
+        <button class="menu-btn" id="mapBtn"><span class="menu-icon">❧</span> Mapa del Campus</button>
+        <button class="menu-btn" id="settingsBtn"><span class="menu-icon">❧</span> Configuración</button>
+      </nav>
+      <div class="sidebar-divider"><span class="divider-flower">✿</span></div>
+      <button class="menu-btn logout" id="logoutBtn"><span class="menu-icon">✦</span> Cerrar Sesión</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="brand-lockup">
+          <div class="brand-subtitle">Temporada 2025</div>
+          <h1 class="brand-title">ONCE CORE</h1>
+        </div>
+        <div class="welcome-text">Convertidor de Archivos</div>
+      </div>
+      <div class="topbar-right">
+        <div class="clock-block">
+          <div id="liveClock" class="live-clock">00:00</div>
+          <div class="clock-label">hora local</div>
+        </div>
+        <button class="profile-btn" id="profileBtn">
+          <img id="topbarAvatar" class="topbar-avatar" src="https://via.placeholder.com/38">
+        </button>
+      </div>
+    </header>
+
+    <div class="main-content">
+
+      <!-- HEADER -->
+      <div class="conv-header">
+        <div class="conv-ornament">❧ ✦ ❧</div>
+        <h2 class="conv-heading">Convertidor de Archivos</h2>
+        <p class="conv-sub">100% en tu navegador · sin subir a servidores · privado y seguro</p>
+        <div class="conv-rule"></div>
+      </div>
+
+      <!-- MODOS SELECTOR -->
+      <div class="modes-row">
+        <button class="mode-btn active" data-mode="img-pdf">
+          <span class="mode-icon">🖼️→📄</span>
+          <span class="mode-label">Imagen → PDF</span>
+        </button>
+        <button class="mode-btn" data-mode="pdf-img">
+          <span class="mode-icon">📄→🖼️</span>
+          <span class="mode-label">PDF → Imágenes</span>
+        </button>
+        <button class="mode-btn" data-mode="img-img">
+          <span class="mode-icon">🖼️→🖼️</span>
+          <span class="mode-label">Convertir Imagen</span>
+        </button>
+        <button class="mode-btn" data-mode="pdf-txt">
+          <span class="mode-icon">📄→📝</span>
+          <span class="mode-label">PDF → Texto</span>
+        </button>
+        <button class="mode-btn" data-mode="img-compress">
+          <span class="mode-icon">🗜️</span>
+          <span class="mode-label">Comprimir Imagen</span>
+        </button>
+        <button class="mode-btn" data-mode="img-raw">
+          <span class="mode-icon">📷</span>
+          <span class="mode-label">Imagen → RAW</span>
+        </button>
+      </div>
+
+      <!-- PANEL ACTIVO -->
+      <div class="conv-panel">
+
+        <!-- Descripción del modo -->
+        <div id="modeDesc" class="mode-desc"></div>
+
+        <!-- DROP ZONE -->
+        <div id="dropZone" class="drop-zone">
+          <div class="dz-inner">
+            <div class="dz-icon" id="dzIcon">⚡</div>
+            <div class="dz-title" id="dzTitle">Arrastra tus archivos aquí</div>
+            <div class="dz-sub" id="dzSub">o haz clic para seleccionar</div>
+            <input type="file" id="fileInput" multiple accept="*" style="display:none">
+            <button class="dz-btn" id="dzBtn">Seleccionar archivos</button>
+          </div>
+        </div>
+
+        <!-- ARCHIVOS SELECCIONADOS -->
+        <div id="fileList" class="file-list hidden"></div>
+
+        <!-- OPCIONES DE CONVERSIÓN -->
+        <div id="convOptions" class="conv-options hidden"></div>
+
+        <!-- BOTÓN CONVERTIR -->
+        <div id="convertRow" class="convert-row hidden">
+          <button id="convertBtn" class="convert-btn">
+            <span id="convertBtnText">Convertir ✦</span>
+          </button>
+        </div>
+
+        <!-- PROGRESO -->
+        <div id="progressWrap" class="progress-wrap hidden">
+          <div class="progress-label" id="progressLabel">Procesando...</div>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+          </div>
+        </div>
+
+        <!-- RESULTADOS -->
+        <div id="resultsWrap" class="results-wrap hidden">
+          <div class="results-header">
+            <span class="results-ornament">✦</span>
+            <span class="results-title">Archivos listos</span>
+            <span class="results-ornament">✦</span>
+          </div>
+          <div id="resultsList" class="results-list"></div>
+          <button id="resetBtn" class="reset-btn">Convertir otro archivo</button>
+        </div>
+
+      </div><!-- /conv-panel -->
+
+    </div>
+  </main>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast hidden"></div>
+
+<script src="themes.js"></script>
+<script src="conversor.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salas — Once Core</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="rooms.css">
+</head>
+<body>
+
+<div class="bg-ornament top-right"></div>
+<div class="bg-ornament bottom-left"></div>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <button class="back-btn" onclick="window.location.href='dashboard.html'">
+    <span class="back-arrow">←</span> Volver
+  </button>
+  <div class="topbar-brand">
+    <span class="brand-sub">Once Core</span>
+    <span class="brand-title">SALONES</span>
+  </div>
+  <div class="topbar-meta" id="topbarUser">—</div>
+</header>
+
+<!-- MAIN -->
+<main class="main-wrap">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header-ornament">❧ ✦ ❧</div>
+    <h1 class="page-title">Salones de Estudio</h1>
+    <p class="page-subtitle">Únete a un salón o crea el tuyo propio para comenzar tu sesión de enfoque</p>
+    <div class="page-header-line"></div>
+  </div>
+
+  <!-- CREATE ROOM FORM -->
+  <div class="create-section">
+    <div class="create-card">
+      <div class="create-card-inner">
+        <div class="create-title">
+          <span class="create-icon">✦</span>
+          Abrir nuevo salón
+        </div>
+        <div class="create-form">
+          <input
+            id="roomName"
+            class="room-input"
+            type="text"
+            placeholder="Nombre del salón..."
+            autocomplete="off"
+          >
+          <button id="createRoomBtn" class="create-btn">
+            Crear Salón
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROOMS GRID -->
+  <div class="rooms-section">
+    <div class="section-label">
+      <span class="label-line"></span>
+      <span class="label-text">Salones disponibles</span>
+      <span class="label-line"></span>
+    </div>
+    <div id="roomsList" class="rooms-grid"></div>
+  </div>
+
+</main>
+
+<script src="rooms.js"></script>
+</body>
+</html>

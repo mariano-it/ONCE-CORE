@@ -1,0 +1,306 @@
+/* =====================================================
+   ONCE CORE — Temas de Familias Bridgerton
+   Cada tema sobreescribe las variables CSS del :root
+   Se aplica poniendo data-theme="familia" en <html>
+===================================================== */
+
+/* ══════════════════════════════════════════════════
+   FAMILIA BRIDGERTON — Azul Zafiro & Crema
+   "La familia más querida de la temporada"
+   Colores: azul real, dorado suave, crema cálida
+══════════════════════════════════════════════════ */
+[data-theme="bridgerton"] {
+  --cream:      #f0f4fd;
+  --parchment:  #dce6f7;
+  --gold:       #b8960c;
+  --gold-light: #d4b44a;
+  --gold-dark:  #8a6e09;
+  --navy:       #1e3a6e;
+  --navy-mid:   #2a4d8f;
+  --sage:       #6b8cba;
+  --blush:      #c5d4f0;
+  --blush-dark: #7a96c8;
+  --text-main:  #0f1e3d;
+  --text-muted: #4a6088;
+  --sidebar-bg-from: #1e3a6e;
+  --sidebar-bg-to:   #0f1e3d;
+  --accent:     #b8960c;
+  --accent-glow: rgba(184,150,12,0.35);
+}
+
+/* ══════════════════════════════════════════════════
+   FAMILIA SHARMA — Rojo Rubí & Dorado Especiado
+   "Apasionada, valiente, elegante"
+   Colores: rojo profundo, dorado cálido, marfil
+══════════════════════════════════════════════════ */
+[data-theme="sharma"] {
+  --cream:      #fdf4f0;
+  --parchment:  #f7e4dc;
+  --gold:       #c9622a;
+  --gold-light: #e07a45;
+  --gold-dark:  #9a3e18;
+  --navy:       #5c1a0f;
+  --navy-mid:   #7a2415;
+  --sage:       #b87060;
+  --blush:      #f0c5b8;
+  --blush-dark: #c87a65;
+  --text-main:  #2e0e08;
+  --text-muted: #8a4a3a;
+  --sidebar-bg-from: #5c1a0f;
+  --sidebar-bg-to:   #2e0e08;
+  --accent:     #c9622a;
+  --accent-glow: rgba(201,98,42,0.35);
+}
+
+/* ══════════════════════════════════════════════════
+   FAMILIA FEATHERINGTON — Verde Esmeralda & Lima
+   "Atrevida, vibrante, siempre llamando la atención"
+   Colores: verde esmeralda, amarillo limón, crema
+══════════════════════════════════════════════════ */
+[data-theme="featherington"] {
+  --cream:      #f2fdf4;
+  --parchment:  #d8f5de;
+  --gold:       #2e8b4a;
+  --gold-light: #4aad64;
+  --gold-dark:  #1a6032;
+  --navy:       #0f3d20;
+  --navy-mid:   #185530;
+  --sage:       #5aad7a;
+  --blush:      #b8f0c8;
+  --blush-dark: #5aad7a;
+  --text-main:  #082010;
+  --text-muted: #3a6a4a;
+  --sidebar-bg-from: #0f3d20;
+  --sidebar-bg-to:   #082010;
+  --accent:     #2e8b4a;
+  --accent-glow: rgba(46,139,74,0.35);
+}
+
+/* ══════════════════════════════════════════════════
+   FAMILIA HASTINGS — Dorado Duque & Negro Noche
+   "Misterioso, poderoso, irresistible"
+   Colores: negro elegante, dorado rico, champagne
+══════════════════════════════════════════════════ */
+[data-theme="hastings"] {
+  --cream:      #fdf8ee;
+  --parchment:  #f5edce;
+  --gold:       #c9a84c;
+  --gold-light: #e8c97a;
+  --gold-dark:  #9b7a2f;
+  --navy:       #1a1a1a;
+  --navy-mid:   #2d2d2d;
+  --sage:       #8a7a5a;
+  --blush:      #e8dfc5;
+  --blush-dark: #b8a070;
+  --text-main:  #0a0a0a;
+  --text-muted: #5a4a2a;
+  --sidebar-bg-from: #1a1a1a;
+  --sidebar-bg-to:   #0a0a0a;
+  --accent:     #c9a84c;
+  --accent-glow: rgba(201,168,76,0.4);
+}
+
+/* ══════════════════════════════════════════════════
+   FAMILIA BASSET — Lavanda & Plata
+   "Soñadora, romántica, etérea"
+   Colores: lavanda suave, plata, blanco perla
+══════════════════════════════════════════════════ */
+[data-theme="basset"] {
+  --cream:      #f8f4fd;
+  --parchment:  #ecdff7;
+  --gold:       #8b5fbf;
+  --gold-light: #a97dd4;
+  --gold-dark:  #6a3d9a;
+  --navy:       #2d1b4e;
+  --navy-mid:   #3d2566;
+  --sage:       #9a7abf;
+  --blush:      #dcc5f0;
+  --blush-dark: #9a6abf;
+  --text-main:  #160a2e;
+  --text-muted: #5a3a8a;
+  --sidebar-bg-from: #2d1b4e;
+  --sidebar-bg-to:   #160a2e;
+  --accent:     #8b5fbf;
+  --accent-glow: rgba(139,95,191,0.35);
+}
+
+/* ══════════════════════════════════════════════════
+   FAMILIA MONDRICH — Ámbar & Marrón Cacao
+   "Cálida, terrosa, acogedora"
+   Colores: ámbar dorado, café oscuro, beige tostado
+══════════════════════════════════════════════════ */
+[data-theme="mondrich"] {
+  --cream:      #fdf5e8;
+  --parchment:  #f0e0c0;
+  --gold:       #b8820a;
+  --gold-light: #d4a030;
+  --gold-dark:  #8a5e08;
+  --navy:       #3d2008;
+  --navy-mid:   #5a3010;
+  --sage:       #9a7040;
+  --blush:      #e8c898;
+  --blush-dark: #b88848;
+  --text-main:  #1e0e04;
+  --text-muted: #6a4020;
+  --sidebar-bg-from: #3d2008;
+  --sidebar-bg-to:   #1e0e04;
+  --accent:     #b8820a;
+  --accent-glow: rgba(184,130,10,0.35);
+}
+
+/* ══════════════════════════════════════════════════
+   FAMILIA CRANE — Rosa Peonía & Blanco Nieve
+   "Delicada, sofisticada, romántica"
+   Colores: rosa profundo, borgoña, crema rosada
+══════════════════════════════════════════════════ */
+[data-theme="crane"] {
+  --cream:      #fdf0f4;
+  --parchment:  #f7dce6;
+  --gold:       #c94a7a;
+  --gold-light: #e06a96;
+  --gold-dark:  #9a2a55;
+  --navy:       #4e0a28;
+  --navy-mid:   #6a1438;
+  --sage:       #c07090;
+  --blush:      #f0b8ce;
+  --blush-dark: #c86890;
+  --text-main:  #280410;
+  --text-muted: #8a3058;
+  --sidebar-bg-from: #4e0a28;
+  --sidebar-bg-to:   #280410;
+  --accent:     #c94a7a;
+  --accent-glow: rgba(201,74,122,0.35);
+}
+
+/* ══════════════════════════════════════════════════
+   LADY DANBURY — Morado Ciruela & Oro Antiguo
+   "Imponente, sabia, la reina de la temporada"
+   Colores: ciruela oscuro, oro antiguo, marfil
+══════════════════════════════════════════════════ */
+[data-theme="danbury"] {
+  --cream:      #faf4fd;
+  --parchment:  #ecdaf5;
+  --gold:       #9a4abf;
+  --gold-light: #b468d4;
+  --gold-dark:  #722a9a;
+  --navy:       #2a0a3e;
+  --navy-mid:   #3d1458;
+  --sage:       #9a68b8;
+  --blush:      #ddb8f0;
+  --blush-dark: #9a58b8;
+  --text-main:  #140520;
+  --text-muted: #5a2a7a;
+  --sidebar-bg-from: #2a0a3e;
+  --sidebar-bg-to:   #140520;
+  --accent:     #9a4abf;
+  --accent-glow: rgba(154,74,191,0.35);
+}
+
+/* ══════════════════════════════════════════════════
+   APLICAR SIDEBAR DINÁMICO según tema
+   (sobreescribe el gradiente del sidebar)
+══════════════════════════════════════════════════ */
+[data-theme] .sidebar {
+  background: linear-gradient(
+    175deg,
+    var(--sidebar-bg-from, #1a2744) 0%,
+    var(--sidebar-bg-to, #0d1728) 100%
+  );
+}
+
+[data-theme] .crest-ring {
+  background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+  box-shadow: 0 0 0 3px var(--accent-glow, rgba(201,168,76,0.2)),
+              0 0 20px var(--accent-glow, rgba(201,168,76,0.15));
+}
+
+[data-theme] .menu-btn:hover,
+[data-theme] .menu-btn.active {
+  background: rgba(255,255,255,0.08);
+  color: var(--gold-light);
+}
+
+[data-theme] .menu-icon { color: var(--gold); }
+
+[data-theme] .divider-flower { color: var(--gold); }
+
+[data-theme] .sidebar-divider::before,
+[data-theme] .sidebar-divider::after {
+  background: linear-gradient(90deg, transparent, var(--accent-glow, rgba(201,168,76,0.3)), transparent);
+}
+
+[data-theme] .topbar {
+  border-bottom-color: rgba(var(--accent), 0.2);
+}
+
+[data-theme] .brand-subtitle { color: var(--gold); }
+[data-theme] .brand-title    { color: var(--navy); }
+
+[data-theme] .live-clock { color: var(--navy); }
+
+[data-theme] .profile-btn { border-color: var(--gold); }
+
+[data-theme] .status-card {
+  border-color: rgba(var(--accent), 0.25);
+}
+
+[data-theme] .card {
+  border-color: rgba(var(--accent), 0.2);
+}
+
+[data-theme] .card-ornament-line {
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+[data-theme] .card-ornament-line:last-child {
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+[data-theme] .card-title { color: var(--navy); }
+
+[data-theme] .sc-icon { color: var(--gold); }
+[data-theme] .sc-value { color: var(--navy); }
+
+/* ══════════════════════════════════════════════════
+   VARIABLES EXTENDIDAS por tema
+   (map markers, room badges, focus colors)
+══════════════════════════════════════════════════ */
+[data-theme="bridgerton"] { --teal: #2a6496; }
+[data-theme="sharma"]     { --teal: #8b3a1a; }
+[data-theme="featherington"] { --teal: #1a6032; }
+[data-theme="hastings"]   { --teal: #5a4a20; }
+[data-theme="basset"]     { --teal: #5a3a8a; }
+[data-theme="mondrich"]   { --teal: #7a5010; }
+[data-theme="crane"]      { --teal: #8a1a48; }
+[data-theme="danbury"]    { --teal: #6a2a90; }
+
+/* Popup del mapa */
+[data-theme] .leaflet-popup-content-wrapper {
+  background: var(--cream) !important;
+  border-color: rgba(var(--gold), 0.4) !important;
+}
+[data-theme] .popup-title  { color: var(--navy); }
+[data-theme] .popup-desc   { color: var(--text-muted); }
+
+/* Room cards */
+[data-theme] .room-card {
+  border-color: rgba(var(--gold), 0.2);
+  background: rgba(255,255,255,0.72);
+}
+[data-theme] .room-card:hover {
+  border-color: rgba(var(--gold), 0.45);
+}
+[data-theme] .room-name { color: var(--navy); }
+
+/* Botones de acción en room.html */
+[data-theme] .break-btn {
+  color: var(--gold-light);
+  border-color: rgba(var(--gold), 0.35);
+}
+
+/* User cards en room.html */
+[data-theme] .user-avatar  { border-color: var(--gold); }
+[data-theme] .user-name    { color: var(--navy); }
+[data-theme] .you-tag      { color: var(--gold); }
+[data-theme] .user-card.is-you {
+  border-color: rgba(var(--gold), 0.4);
+  background: rgba(var(--parchment), 0.6);
+}

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tareas — Once Core</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="dashboard.css">
+<link rel="stylesheet" href="tareas.css">
+</head>
+<body>
+
+<div class="bg-ornament top-left"></div>
+<div class="bg-ornament bottom-right"></div>
+
+<div class="dashboard">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+      <div class="sidebar-crest">
+        <div class="crest-ring">
+          <img id="sidebarAvatar" class="sidebar-avatar" src="https://via.placeholder.com/80">
+        </div>
+        <div class="sidebar-name" id="sidebarName">Cargando...</div>
+        <div class="sidebar-campus" id="sidebarCampus">Campus</div>
+        <div class="status-badge">
+          <span class="status-dot online" id="statusDot"></span>
+          <span class="status-text" id="statusText">Online</span>
+        </div>
+      </div>
+      <div class="sidebar-divider"><span class="divider-flower">✿</span></div>
+      <nav class="sidebar-menu">
+        <button class="menu-btn" id="dashBtn"><span class="menu-icon">❧</span> Inicio</button>
+        <button class="menu-btn" id="roomsBtn"><span class="menu-icon">❧</span> Salas</button>
+        <button class="menu-btn" id="tareasBtn"><span class="menu-icon">❧</span> Tareas</button>
+        <button class="menu-btn" id="hubBtn"><span class="menu-icon">❧</span> Hub Anáhuac</button>
+        <button class="menu-btn" id="conversorBtn"><span class="menu-icon">❧</span> Convertidor</button>
+        <button class="menu-btn" id="mapBtn"><span class="menu-icon">❧</span> Mapa del Campus</button>
+        <button class="menu-btn" id="settingsBtn"><span class="menu-icon">❧</span> Configuración</button>
+      </nav>
+      <div class="sidebar-divider"><span class="divider-flower">✿</span></div>
+      <button class="menu-btn logout" id="logoutBtn"><span class="menu-icon">✦</span> Cerrar Sesión</button>
+    </div>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="brand-lockup">
+          <div class="brand-subtitle">Temporada 2025</div>
+          <h1 class="brand-title">ONCE CORE</h1>
+        </div>
+        <div class="welcome-text" id="welcomeText">Tablón de Tareas</div>
+      </div>
+      <div class="topbar-right">
+        <div class="clock-block">
+          <div id="liveClock" class="live-clock">00:00</div>
+          <div class="clock-label">hora local</div>
+        </div>
+        <button class="profile-btn" id="profileBtn">
+          <img id="topbarAvatar" class="topbar-avatar" src="https://via.placeholder.com/38">
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+      <!-- PAGE HEADER -->
+      <div class="tareas-page-header">
+        <div class="page-ornament">❧ ✦ ❧</div>
+        <h2 class="page-heading">Tablón de Tareas</h2>
+        <p class="page-sub">Publica tus pendientes y apoya a tus compañeras</p>
+        <div class="page-rule"></div>
+      </div>
+
+      <!-- NUEVA TAREA FORM -->
+      <div class="nueva-tarea-card">
+        <div class="nt-header">
+          <span class="nt-icon">✦</span>
+          <span class="nt-title">Publicar una tarea</span>
+        </div>
+        <div class="nt-body">
+          <input id="ntTitle" class="nt-input" type="text" placeholder="¿Qué tienes que entregar?" maxlength="80" autocomplete="off">
+          <div class="nt-row">
+            <input id="ntSubject" class="nt-input nt-half" type="text" placeholder="Materia" maxlength="40" autocomplete="off">
+            <input id="ntDue" class="nt-input nt-half" type="datetime-local">
+          </div>
+          <textarea id="ntDesc" class="nt-textarea" placeholder="Descripción opcional... (puedes pedir ayuda aquí)" rows="2" maxlength="200"></textarea>
+          <div class="nt-footer">
+            <div class="nt-priority-wrap">
+              <span class="nt-label">Prioridad:</span>
+              <button class="priority-btn active" data-p="normal">Normal</button>
+              <button class="priority-btn" data-p="alta">Alta</button>
+              <button class="priority-btn" data-p="urgente">Urgente</button>
+            </div>
+            <button id="publishBtn" class="publish-btn">Publicar ✦</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABS MIS TAREAS / TODAS -->
+      <div class="tabs-row">
+        <button class="tab-btn active" id="tabMias">Mis tareas</button>
+        <button class="tab-btn" id="tabTodas">Tablón general</button>
+        <div class="tab-indicator"></div>
+      </div>
+
+      <!-- LISTA DE TAREAS -->
+      <div id="tareasContainer" class="tareas-grid"></div>
+
+    </div><!-- /main-content -->
+  </main>
+</div>
+
+<!-- ══════════ MODAL SUERTE / AYUDA ══════════ -->
+<div id="apoyoModal" class="apoyo-overlay">
+  <div class="apoyo-card">
+    <div class="apoyo-floral">❧ ✦ ❧</div>
+    <button id="closeApoyoBtn" class="modal-close">✕</button>
+
+    <img id="apoyoAvatar" class="apoyo-avatar" src="">
+    <div id="apoyoNombre" class="apoyo-nombre">—</div>
+    <div id="apoyoTareaTitle" class="apoyo-tarea-title">—</div>
+
+    <div class="apoyo-divider"></div>
+
+    <!-- Botón SUERTE -->
+    <button id="btnSuerte" class="apoyo-btn suerte-btn">
+      <span class="apoyo-btn-emoji">💛</span>
+      <span>¡Mucha suerte!</span>
+    </button>
+
+    <!-- Botón AYUDA + mensaje -->
+    <div class="ayuda-section">
+      <button id="btnAyuda" class="apoyo-btn ayuda-btn">
+        <span class="apoyo-btn-emoji">🤝</span>
+        <span>Ofrecer ayuda</span>
+      </button>
+      <div id="ayudaForm" class="ayuda-form hidden">
+        <textarea id="ayudaMensaje" class="ayuda-textarea"
+          placeholder="Escribe tu mensaje personalizado... ej: 'Oye, yo tengo apuntes de eso, te los paso'"
+          rows="3" maxlength="200"></textarea>
+        <button id="sendAyuda" class="send-btn">Enviar mensaje ✦</button>
+      </div>
+    </div>
+
+    <!-- Confirmación -->
+    <div id="apoyoConfirm" class="apoyo-confirm hidden">
+      <div class="confirm-emoji" id="confirmEmoji">💛</div>
+      <div class="confirm-text" id="confirmText">¡Suerte enviada!</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════ TOAST ══════════ -->
+<div id="toast" class="toast hidden"></div>
+
+<!-- ══════════ PARTÍCULAS SUERTE ══════════ -->
+<canvas id="luckyCanvas" class="lucky-canvas"></canvas>
+
+<script src="themes.js"></script>
+<script src="tareas.js"></script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Once Core — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="dashboard.css">
+<link rel="stylesheet" href="themes.css">
+</head>
+<body>
+
+<div class="bg-ornament top-left"></div>
+<div class="bg-ornament bottom-right"></div>
+
+<div class="dashboard">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <div class="sidebar-crest">
+        <div class="crest-ring">
+          <img id="sidebarAvatar" class="sidebar-avatar" src="https://via.placeholder.com/80">
+        </div>
+        <div class="sidebar-name" id="sidebarName">Cargando...</div>
+        <div class="sidebar-campus" id="sidebarCampus">Campus</div>
+        <div class="status-badge">
+          <span class="status-dot online" id="statusDot"></span>
+          <span class="status-text" id="statusText">Online</span>
+        </div>
+      </div>
+
+      <div class="sidebar-divider">
+        <span class="divider-flower">✿</span>
+      </div>
+
+      <nav class="sidebar-menu">
+        <button class="menu-btn" id="dashBtn"><span class="menu-icon">❧</span> Inicio</button>
+        <button class="menu-btn" id="roomsBtn"><span class="menu-icon">❧</span> Salas</button>
+        <button class="menu-btn" id="tareasBtn"><span class="menu-icon">❧</span> Tareas</button>
+        <button class="menu-btn" id="hubBtn"><span class="menu-icon">❧</span> Hub Anáhuac</button>
+        <button class="menu-btn" id="conversorBtn"><span class="menu-icon">❧</span> Convertidor</button>
+        <button class="menu-btn" id="mapBtn"><span class="menu-icon">❧</span> Mapa del Campus</button>
+        <button class="menu-btn" id="settingsBtn"><span class="menu-icon">❧</span> Configuración</button>
+      </nav>
+
+      <div class="sidebar-divider">
+        <span class="divider-flower">✿</span>
+      </div>
+
+      <button class="menu-btn logout" id="logoutBtn">
+        <span class="menu-icon">✦</span> Cerrar Sesión
+      </button>
+
+    </div>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="brand-lockup">
+          <div class="brand-subtitle">Temporada 2025</div>
+          <h1 class="brand-title">ONCE CORE</h1>
+        </div>
+        <div id="welcomeText" class="welcome-text">Bienvenida</div>
+      </div>
+      <div class="topbar-right">
+        <div class="clock-block">
+          <div id="liveClock" class="live-clock">00:00</div>
+          <div class="clock-label">hora local</div>
+        </div>
+        <div id="focusStatus" class="focus-status">● Online</div>
+        <button class="profile-btn" id="profileBtn">
+          <img id="topbarAvatar" class="topbar-avatar" src="https://via.placeholder.com/38">
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+      <!-- Status Row -->
+      <div class="status-row">
+        <div class="status-card glass">
+          <div class="sc-icon">◈</div>
+          <div>
+            <div class="sc-label">Estado actual</div>
+            <div id="currentStatus" class="sc-value">Online</div>
+          </div>
+        </div>
+        <div class="status-card glass">
+          <div class="sc-icon">◇</div>
+          <div>
+            <div class="sc-label">Última actividad</div>
+            <div id="lastActivity" class="sc-value">Ahora mismo</div>
+          </div>
+        </div>
+        <div class="status-card glass">
+          <div class="sc-icon">✦</div>
+          <div>
+            <div class="sc-label">Sesión iniciada</div>
+            <div class="sc-value" id="sessionTime">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CALENDARIO — full width -->
+      <div class="card card-calendar">
+        <div class="card-header-ornament">
+          <span class="card-ornament-line"></span>
+          <h3 class="card-title">Clases de Hoy</h3>
+          <span class="card-ornament-line"></span>
+        </div>
+        <div id="calendarToday" class="calendar-today"></div>
+      </div>
+
+
+      <!-- ══ LADY WHISTLEDOWN ══ -->
+      <div class="card card-whistledown" id="whistledownCard">
+        <div class="wd-seal">✦</div>
+        <div class="wd-header">
+          <span class="wd-quill">🪶</span>
+          <div>
+            <div class="wd-byline">De la pluma de</div>
+            <h3 class="wd-title">Lady Whistledown</h3>
+          </div>
+          <span class="wd-quill">🪶</span>
+        </div>
+        <div class="wd-rule"></div>
+        <div id="wdContent" class="wd-content">
+          <p class="wd-placeholder">Querida Sociedad...<br><em>La columna de esta semana aún no ha sido publicada. La ansiedad de la temporada es palpable.</em></p>
+        </div>
+        <div class="wd-footer">
+          <span class="wd-date" id="wdDate">—</span>
+          <button class="wd-edit-btn" id="wdEditBtn" title="Solo Lady Whistledown puede editar">🪶 Editar</button>
+        </div>
+      </div>
+
+      <!-- Cards Grid -->
+      <div class="cards-grid">
+
+        <div class="card card-rooms">
+          <div class="card-header-ornament">
+            <span class="card-ornament-line"></span>
+            <h3 class="card-title">Salas Activas</h3>
+            <span class="card-ornament-line"></span>
+          </div>
+          <div id="roomsList" class="rooms-list">
+            <div class="empty-state">
+              <span>✦</span> No hay salas activas en este momento
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-activity">
+          <div class="card-header-ornament">
+            <span class="card-ornament-line"></span>
+            <h3 class="card-title">Actividad Reciente</h3>
+            <span class="card-ornament-line"></span>
+          </div>
+          <div id="activityList" class="activity-list">
+            <div class="empty-state">
+              <span>✦</span> Sin actividad reciente
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /cards-grid -->
+
+    </div><!-- /main-content -->
+
+  </main>
+</div>
+
+<!-- PROFILE MODAL -->
+<div id="profileModal" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-floral-top">❧ ✦ ❧</div>
+    <button id="closeProfileBtn" class="modal-close">✕</button>
+    <img id="profileAvatar" class="modal-avatar" src="https://via.placeholder.com/100">
+    <div id="profileName" class="modal-name">—</div>
+    <div id="profileCampus" class="modal-campus">—</div>
+    <div class="modal-divider"></div>
+    <div id="profileEmail" class="modal-email">—</div>
+    <div id="profileStatus" class="modal-status-badge">Online</div>
+  </div>
+</div>
+
+<script src="themes.js"></script>
+<!-- ══════════ MODAL LADY WHISTLEDOWN ══════════ -->
+<div id="wdModal" class="wd-modal-overlay">
+  <div class="wd-modal-card">
+
+    <!-- Fase 1: Auth -->
+    <div id="wdAuthPhase" class="wd-phase">
+      <div class="wd-modal-seal">❧ ✦ ❧</div>
+      <button class="modal-close" id="wdCloseBtn">✕</button>
+      <div class="wd-modal-quill">🪶</div>
+      <h2 class="wd-modal-title">Acceso Reservado</h2>
+      <p class="wd-modal-sub">Solo la pluma de Lady Whistledown puede continuar</p>
+      <div class="wd-modal-divider"></div>
+      <div class="wd-field-group">
+        <label class="wd-field-label">Nombre secreto</label>
+        <input id="wdSecretName" class="wd-input" type="text" placeholder="¿Cómo te llamas tú sola?" autocomplete="off" autocorrect="off" spellcheck="false">
+      </div>
+      <div class="wd-field-group">
+        <label class="wd-field-label">PIN secreto</label>
+        <div class="wd-pin-row" id="wdPinRow">
+          <input class="wd-pin-digit" type="password" maxlength="1" inputmode="numeric" pattern="[0-9]">
+          <input class="wd-pin-digit" type="password" maxlength="1" inputmode="numeric" pattern="[0-9]">
+          <input class="wd-pin-digit" type="password" maxlength="1" inputmode="numeric" pattern="[0-9]">
+          <input class="wd-pin-digit" type="password" maxlength="1" inputmode="numeric" pattern="[0-9]">
+          <input class="wd-pin-digit" type="password" maxlength="1" inputmode="numeric" pattern="[0-9]">
+          <input class="wd-pin-digit" type="password" maxlength="1" inputmode="numeric" pattern="[0-9]">
+        </div>
+      </div>
+      <div id="wdAuthError" class="wd-auth-error hidden">Credenciales incorrectas. La Sociedad está observando.</div>
+      <button id="wdAuthBtn" class="wd-primary-btn">Entrar ✦</button>
+
+      <!-- Primera vez: configurar credenciales -->
+      <div id="wdFirstTimeNote" class="wd-firsttime-note hidden">
+        <span>✦</span> Primera vez — estas credenciales quedarán guardadas solo en este dispositivo
+      </div>
+    </div>
+
+    <!-- Fase 2: Editor -->
+    <div id="wdEditorPhase" class="wd-phase hidden">
+      <div class="wd-modal-seal">❧ ✦ ❧</div>
+      <button class="modal-close" id="wdCloseEditorBtn">✕</button>
+      <h2 class="wd-modal-title">Lady Whistledown escribe</h2>
+      <div class="wd-modal-divider"></div>
+
+      <!-- Tipo de publicación -->
+      <div class="wd-type-row">
+        <button class="wd-type-btn active" data-type="carta">📜 Carta semanal</button>
+        <button class="wd-type-btn" data-type="anuncio">📣 Anuncio</button>
+        <button class="wd-type-btn" data-type="nota">🗒 Nota social</button>
+        <button class="wd-type-btn" data-type="chisme">🤫 Chisme exclusivo</button>
+      </div>
+
+      <!-- Título -->
+      <input id="wdEditorTitle" class="wd-input" type="text" placeholder="Título de la publicación..." maxlength="80" autocomplete="off">
+
+      <!-- Cuerpo -->
+      <textarea id="wdEditorBody" class="wd-textarea" rows="7"
+        placeholder="Querida Sociedad, me complace informaros que..."></textarea>
+
+      <!-- Firma personalizada -->
+      <input id="wdEditorFirma" class="wd-input wd-firma-input" type="text"
+        placeholder="Firma (ej: Con afecto, Lady W.)" maxlength="60" autocomplete="off">
+
+      <div class="wd-editor-actions">
+        <button id="wdDeleteBtn" class="wd-danger-btn">Borrar publicación</button>
+        <button id="wdPublishEditorBtn" class="wd-primary-btn">Publicar ✦</button>
+      </div>
+
+      <!-- Cambiar credenciales -->
+      <button id="wdChangeCreds" class="wd-link-btn">Cambiar PIN y nombre secreto</button>
+    </div>
+
+  </div>
+</div>
+
+
+<script src="themes.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>

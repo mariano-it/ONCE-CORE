@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa del Campus — Once Core</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="map.css">
+</head>
+<body>
+
+<div class="bg-ornament top-right"></div>
+<div class="bg-ornament bottom-left"></div>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <button class="back-btn" onclick="window.location.href='dashboard.html'">
+    <span>←</span> Dashboard
+  </button>
+  <div class="topbar-brand">
+    <span class="brand-sub">Once Core</span>
+    <span class="brand-title">MAPA DEL CAMPUS</span>
+  </div>
+  <div class="topbar-meta">Anáhuac Mayab</div>
+</header>
+
+<!-- LAYOUT -->
+<div class="page-layout">
+
+  <!-- SIDEBAR PANEL -->
+  <aside class="map-sidebar">
+
+    <div class="sidebar-header">
+      <div class="sidebar-ornament">❧ ✦ ❧</div>
+      <h2 class="sidebar-title">Ubicaciones</h2>
+      <p class="sidebar-subtitle">Selecciona un lugar para ver detalles</p>
+    </div>
+
+    <!-- FILTER TABS -->
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="all">Todos</button>
+      <button class="filter-tab" data-filter="study">Estudio</button>
+      <button class="filter-tab" data-filter="food">Cafeterías</button>
+      <button class="filter-tab" data-filter="building">Edificios</button>
+    </div>
+
+    <!-- PLACES LIST -->
+    <div class="places-list" id="placesList"></div>
+
+    <!-- DETAIL PANEL (hidden by default) -->
+    <div class="detail-panel" id="detailPanel">
+      <div class="detail-header">
+        <div class="detail-icon" id="detailIcon">📍</div>
+        <div>
+          <div class="detail-name" id="detailName">—</div>
+          <div class="detail-type" id="detailType">—</div>
+        </div>
+      </div>
+      <div class="detail-divider"></div>
+      <div class="detail-desc" id="detailDesc">—</div>
+      <div class="detail-hours" id="detailHours"></div>
+      <button class="detail-close" id="detailClose">✕ Cerrar</button>
+    </div>
+
+  </aside>
+
+  <!-- MAP CONTAINER -->
+  <div class="map-container">
+    <div id="map"></div>
+
+    <!-- Map legend -->
+    <div class="map-legend">
+      <div class="legend-item"><span class="legend-dot study"></span> Estudio</div>
+      <div class="legend-item"><span class="legend-dot food"></span> Cafetería</div>
+      <div class="legend-item"><span class="legend-dot building"></span> Edificio</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Leaflet JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="map.js"></script>
+</body>
+</html>

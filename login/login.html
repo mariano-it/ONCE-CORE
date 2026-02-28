@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Once Core — Acceso</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+<div class="bg-ornament top-left"></div>
+<div class="bg-ornament bottom-right"></div>
+
+<!-- PANEL IZQUIERDO — decorativo -->
+<div class="panel-left">
+  <div class="panel-left-inner">
+    <div class="panel-ornament">❧ ✦ ❧</div>
+    <h1 class="panel-title">ONCE CORE</h1>
+    <p class="panel-tagline">El salón de estudio de la temporada</p>
+    <div class="panel-divider"></div>
+    <p class="panel-quote">"La educación es el arma más poderosa que puedes usar para cambiar el mundo."</p>
+  </div>
+</div>
+
+<!-- PANEL DERECHO — formulario -->
+<div class="panel-right">
+  <div class="form-card">
+
+    <!-- Logo móvil (solo visible en mobile) -->
+    <div class="mobile-brand">
+      <div class="mobile-ornament">❧ ✦ ❧</div>
+      <div class="mobile-title">ONCE CORE</div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" id="tabLogin">Iniciar Sesión</button>
+      <button class="tab" id="tabRegister">Crear Cuenta</button>
+    </div>
+
+    <!-- FORMULARIO LOGIN -->
+    <div class="form-body" id="formLogin">
+      <div class="form-field">
+        <label class="field-label" for="loginEmail">Correo electrónico</label>
+        <input id="loginEmail" class="field-input" type="email" placeholder="tucorreo@anahuac.mx" autocomplete="email">
+      </div>
+      <div class="form-field">
+        <label class="field-label" for="loginPassword">Contraseña</label>
+        <div class="input-wrap">
+          <input id="loginPassword" class="field-input" type="password" placeholder="••••••••" autocomplete="current-password">
+          <button class="toggle-pass" id="toggleLoginPass" type="button" tabindex="-1">👁</button>
+        </div>
+      </div>
+      <div class="status-msg" id="loginStatus"></div>
+      <button class="primary-btn" id="loginBtn">
+        <span class="btn-icon">◈</span> Entrar al Salón
+      </button>
+    </div>
+
+    <!-- FORMULARIO REGISTRO -->
+    <div class="form-body hidden" id="formRegister">
+      <div class="form-field">
+        <label class="field-label" for="regEmail">Correo electrónico</label>
+        <input id="regEmail" class="field-input" type="email" placeholder="tucorreo@anahuac.mx" autocomplete="email">
+      </div>
+      <div class="form-field">
+        <label class="field-label" for="regPassword">Contraseña</label>
+        <div class="input-wrap">
+          <input id="regPassword" class="field-input" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+          <button class="toggle-pass" id="toggleRegPass" type="button" tabindex="-1">👁</button>
+        </div>
+      </div>
+      <div class="form-field">
+        <label class="field-label" for="regPasswordConfirm">Confirmar contraseña</label>
+        <input id="regPasswordConfirm" class="field-input" type="password" placeholder="Repite tu contraseña" autocomplete="new-password">
+      </div>
+      <div class="status-msg" id="registerStatus"></div>
+      <button class="primary-btn" id="registerBtn">
+        <span class="btn-icon">✦</span> Crear mi Cuenta
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script src="login.js"></script>
+</body>
+</html>
