@@ -1,68 +1,24 @@
 // ═══════════════════════════════════════════════════════
 // ONCE CORE — Sistema de Tareas
-// Supabase Native • Realtime • Multiusuario • Robusto
+// Supabase Native • Realtime • Multiusuario • Estable
 // ═══════════════════════════════════════════════════════
-
-
-// ───────────────────────────────────────────────────────
-// Referencias DOM
-// ───────────────────────────────────────────────────────
-
-const UI = {
-
-  container: document.getElementById("tareasContainer"),
-
-  publishBtn: document.getElementById("publishBtn"),
-
-  ntTitle: document.getElementById("ntTitle"),
-  ntSubject: document.getElementById("ntSubject"),
-  ntDue: document.getElementById("ntDue"),
-  ntDesc: document.getElementById("ntDesc"),
-
-  tabMias: document.getElementById("tabMias"),
-  tabTodas: document.getElementById("tabTodas")
-
-};
 
 
 // ───────────────────────────────────────────────────────
 // Estado global
 // ───────────────────────────────────────────────────────
 
-const supabase = window._supabase;
-
 let currentUser = null;
-
 let tareasCache = [];
-
 let currentTab = "mias";
-
 let selectedPriority = "normal";
 
 
 // ───────────────────────────────────────────────────────
-// Esperar Supabase
+// Referencias DOM (se cargan después)
 // ───────────────────────────────────────────────────────
 
-function waitForSupabase() {
-
-  return new Promise(resolve => {
-
-    const interval = setInterval(() => {
-
-      if (window._supabase) {
-
-        clearInterval(interval);
-
-        resolve(window._supabase);
-
-      }
-
-    }, 50);
-
-  });
-
-}
+let UI = {};
 
 
 // ───────────────────────────────────────────────────────
@@ -73,21 +29,29 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
 
-    supabase = await waitForSupabase();
+    // Verificar supabase
+    if (!window._supabase) {
+
+      console.error("Supabase no disponible");
+      return;
+
+    }
+
+    initUI();
 
     await loadUser();
 
-    setupUI();
+    setupUIEvents();
 
     await loadTareas();
 
     subscribeRealtime();
 
-    console.log("ONCE CORE tareas inicializado");
+    console.log("ONCE CORE tareas listo");
 
   } catch (err) {
 
-    console.error("Error inicializando:", err);
+    console.error("Error inicial:", err);
 
   }
 
@@ -95,32 +59,56 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 // ───────────────────────────────────────────────────────
-// Usuario actual
+// Inicializar referencias DOM
 // ───────────────────────────────────────────────────────
 
-async function loadUser() {
+function initUI() {
 
-  const { data, error } =
-    await supabase.auth.getSession();
+  UI = {
 
-  if (error || !data.session) {
+    container: document.getElementById("tareasContainer"),
 
-    window.location.href = "../login/login.html";
+    publishBtn: document.getElementById("publishBtn"),
 
-    return;
+    ntTitle: document.getElementById("ntTitle"),
+    ntSubject: document.getElementById("ntSubject"),
+    ntDue: document.getElementById("ntDue"),
+    ntDesc: document.getElementById("ntDesc"),
 
-  }
+    tabMias: document.getElementById("tabMias"),
+    tabTodas: document.getElementById("tabTodas")
 
-  currentUser = data.session.user;
+  };
 
 }
 
 
 // ───────────────────────────────────────────────────────
-// UI setup
+// Obtener usuario actual
 // ───────────────────────────────────────────────────────
 
-function setupUI() {
+async function loadUser() {
+
+  const { data, error } =
+    await window._supabase.auth.getUser();
+
+  if (error || !data.user) {
+
+    window.location.href = "../login/login.html";
+    return;
+
+  }
+
+  currentUser = data.user;
+
+}
+
+
+// ───────────────────────────────────────────────────────
+// Eventos UI
+// ───────────────────────────────────────────────────────
+
+function setupUIEvents() {
 
   UI.publishBtn?.addEventListener(
     "click",
@@ -161,13 +149,13 @@ function setupUI() {
 
 
 // ───────────────────────────────────────────────────────
-// Cargar tareas
+// Cargar tareas desde Supabase
 // ───────────────────────────────────────────────────────
 
 async function loadTareas() {
 
   const { data, error } =
-    await supabase
+    await window._supabase
       .from("tareas")
       .select("*")
       .order("created_at", { ascending: false });
@@ -175,14 +163,11 @@ async function loadTareas() {
   if (error) {
 
     console.error(error);
-
-    showToast("Error cargando tareas");
-
     return;
 
   }
 
-  tareasCache = data;
+  tareasCache = data || [];
 
   renderTareas();
 
@@ -190,18 +175,16 @@ async function loadTareas() {
 
 
 // ───────────────────────────────────────────────────────
-// Crear tarea
+// Publicar tarea
 // ───────────────────────────────────────────────────────
 
 async function publishTarea() {
 
-  const title =
-    UI.ntTitle.value.trim();
+  const title = UI.ntTitle?.value.trim();
 
   if (!title) {
 
     showToast("Escribe un título");
-
     return;
 
   }
@@ -211,13 +194,13 @@ async function publishTarea() {
     title: title,
 
     subject:
-      UI.ntSubject.value || "General",
+      UI.ntSubject?.value || "General",
 
     description:
-      UI.ntDesc.value || "",
+      UI.ntDesc?.value || "",
 
     due:
-      UI.ntDue.value || null,
+      UI.ntDue?.value || null,
 
     priority:
       selectedPriority,
@@ -229,8 +212,8 @@ async function publishTarea() {
       currentUser.email,
 
     autor_name:
-      currentUser.user_metadata?.name
-      || currentUser.email,
+      currentUser.user_metadata?.name ||
+      currentUser.email,
 
     suertes: [],
 
@@ -241,23 +224,21 @@ async function publishTarea() {
   };
 
   const { error } =
-    await supabase
+    await window._supabase
       .from("tareas")
       .insert(tarea);
 
   if (error) {
 
     console.error(error);
-
     showToast("Error publicando");
-
     return;
 
   }
 
   clearForm();
 
-  showToast("Tarea publicada");
+  showToast("Publicado");
 
 }
 
@@ -295,13 +276,13 @@ function renderTareas() {
   UI.container.innerHTML =
     tareas.map(buildCard).join("");
 
-  bindEvents();
+  bindCardEvents();
 
 }
 
 
 // ───────────────────────────────────────────────────────
-// Card HTML
+// Crear card HTML
 // ───────────────────────────────────────────────────────
 
 function buildCard(t) {
@@ -333,17 +314,13 @@ function buildCard(t) {
         isOwn
         ? `<span>Tuya</span>`
         : `
-          <button
-            class="btn-suerte"
-            data-id="${t.id}">
-            💛 ${suertes}
-          </button>
+        <button class="btn-suerte" data-id="${t.id}">
+          💛 ${suertes}
+        </button>
 
-          <button
-            class="btn-ayuda"
-            data-id="${t.id}">
-            🤝 ${ayudas}
-          </button>
+        <button class="btn-ayuda" data-id="${t.id}">
+          🤝 ${ayudas}
+        </button>
         `
       }
 
@@ -357,34 +334,30 @@ function buildCard(t) {
 
 
 // ───────────────────────────────────────────────────────
-// Eventos botones
+// Eventos cards
 // ───────────────────────────────────────────────────────
 
-function bindEvents() {
+function bindCardEvents() {
 
   document
     .querySelectorAll(".btn-suerte")
-    .forEach(btn => {
-
+    .forEach(btn =>
       btn.onclick =
-        () => sendSuerte(btn.dataset.id);
-
-    });
+        () => sendSuerte(btn.dataset.id)
+    );
 
   document
     .querySelectorAll(".btn-ayuda")
-    .forEach(btn => {
-
+    .forEach(btn =>
       btn.onclick =
-        () => sendAyuda(btn.dataset.id);
-
-    });
+        () => sendAyuda(btn.dataset.id)
+    );
 
 }
 
 
 // ───────────────────────────────────────────────────────
-// Suerte
+// Dar suerte
 // ───────────────────────────────────────────────────────
 
 async function sendSuerte(id) {
@@ -394,16 +367,15 @@ async function sendSuerte(id) {
 
   if (!tarea) return;
 
-  const suertes =
+  let suertes =
     tarea.suertes || [];
 
-  if (
-    suertes.includes(currentUser.id)
-  ) return;
+  if (suertes.includes(currentUser.id))
+    return;
 
   suertes.push(currentUser.id);
 
-  await supabase
+  await window._supabase
     .from("tareas")
     .update({ suertes })
     .eq("id", id);
@@ -412,7 +384,7 @@ async function sendSuerte(id) {
 
 
 // ───────────────────────────────────────────────────────
-// Ayuda
+// Dar ayuda
 // ───────────────────────────────────────────────────────
 
 async function sendAyuda(id) {
@@ -422,20 +394,23 @@ async function sendAyuda(id) {
 
   if (!tarea) return;
 
-  const ayudas =
+  let ayudas =
     tarea.ayudas || [];
 
   ayudas.push({
 
-    user_id: currentUser.id,
+    user_id:
+      currentUser.id,
 
-    email: currentUser.email,
+    email:
+      currentUser.email,
 
-    ts: Date.now()
+    ts:
+      Date.now()
 
   });
 
-  await supabase
+  await window._supabase
     .from("tareas")
     .update({ ayudas })
     .eq("id", id);
@@ -449,21 +424,17 @@ async function sendAyuda(id) {
 
 function subscribeRealtime() {
 
-  supabase
-    .channel("tareas_channel")
+  window._supabase
+    .channel("tareas_realtime")
 
     .on(
-
       "postgres_changes",
-
       {
         event: "*",
         schema: "public",
         table: "tareas"
       },
-
       () => loadTareas()
-
     )
 
     .subscribe();
@@ -485,10 +456,10 @@ function switchTab(tab) {
 
 function clearForm() {
 
-  UI.ntTitle.value = "";
-  UI.ntSubject.value = "";
-  UI.ntDue.value = "";
-  UI.ntDesc.value = "";
+  if (UI.ntTitle) UI.ntTitle.value = "";
+  if (UI.ntSubject) UI.ntSubject.value = "";
+  if (UI.ntDue) UI.ntDue.value = "";
+  if (UI.ntDesc) UI.ntDesc.value = "";
 
 }
 
