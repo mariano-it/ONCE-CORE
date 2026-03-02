@@ -35,16 +35,17 @@ async function requireAuth() {
 
 }
 
-await requireAuth();
+document.addEventListener("DOMContentLoaded", async () => {
 
-document.addEventListener("DOMContentLoaded", () => {
+  // Esperar autenticación real
+  await requireAuth();
 
   // =========================
   // Obtener datos
   // =========================
-const profile = CURRENT_PROFILE;
-const user    = CURRENT_USER;
-
+  const profile = CURRENT_PROFILE;
+  const user    = CURRENT_USER;
+  
   // =========================
   // Sidebar
   // =========================
