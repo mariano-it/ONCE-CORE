@@ -1,88 +1,64 @@
 // ═══════════════════════════════════════════════════════
-// ONCE CORE — Sistema de Tareas (Supabase Edition)
-// Persistente • Realtime • Multiusuario real
+// ONCE CORE — Sistema de Tareas
+// Supabase Native • Realtime • Multiusuario • Robusto
 // ═══════════════════════════════════════════════════════
+
+
+// ───────────────────────────────────────────────────────
+// Referencias DOM
+// ───────────────────────────────────────────────────────
+
+const UI = {
+
+  container: document.getElementById("tareasContainer"),
+
+  publishBtn: document.getElementById("publishBtn"),
+
+  ntTitle: document.getElementById("ntTitle"),
+  ntSubject: document.getElementById("ntSubject"),
+  ntDue: document.getElementById("ntDue"),
+  ntDesc: document.getElementById("ntDesc"),
+
+  tabMias: document.getElementById("tabMias"),
+  tabTodas: document.getElementById("tabTodas")
+
+};
 
 
 // ───────────────────────────────────────────────────────
 // Estado global
 // ───────────────────────────────────────────────────────
 
-let currentTab = "mias";
-let selectedPriority = "normal";
-let apoyoTarget = null;
+let supabase = null;
 
 let currentUser = null;
-let currentProfile = null;
 
 let tareasCache = [];
 
+let currentTab = "mias";
 
-// ───────────────────────────────────────────────────────
-// Inicialización
-// ───────────────────────────────────────────────────────
-
-document.addEventListener("DOMContentLoaded", async () => {
-
-  await initialize();
-
-  setupUI();
-
-  await loadTareas();
-
-  subscribeRealtime();
-
-});
+let selectedPriority = "normal";
 
 
 // ───────────────────────────────────────────────────────
-// Inicializar usuario
+// Esperar Supabase
 // ───────────────────────────────────────────────────────
 
-async function initialize() {
+function waitForSupabase() {
 
-  currentUser = await sbGetUser();
+  return new Promise(resolve => {
 
-  if (!currentUser) {
+    const interval = setInterval(() => {
 
-    window.location.href = "../login/login.html";
-    return;
+      if (window._supabase) {
 
-  }
+        clearInterval(interval);
 
-  currentProfile = await sbGetProfile(currentUser.id);
+        resolve(window._supabase);
 
-}
+      }
 
-
-// ───────────────────────────────────────────────────────
-// Setup UI
-// ───────────────────────────────────────────────────────
-
-function setupUI() {
-
-  document.getElementById("publishBtn")
-  ?.addEventListener("click", publishTarea);
-
-  document.getElementById("tabMias")
-  ?.addEventListener("click", () => switchTab("mias"));
-
-  document.getElementById("tabTodas")
-  ?.addEventListener("click", () => switchTab("todas"));
-
-  document.querySelectorAll(".priority-btn")
-  .forEach(btn => {
-
-    btn.addEventListener("click", () => {
-
-      document.querySelectorAll(".priority-btn")
-      .forEach(b => b.classList.remove("active"));
-
-      btn.classList.add("active");
-
-      selectedPriority = btn.dataset.p;
-
-    });
+    }, 50);
 
   });
 
@@ -90,12 +66,123 @@ function setupUI() {
 
 
 // ───────────────────────────────────────────────────────
-// Cargar tareas desde Supabase
+// Inicialización principal
+// ───────────────────────────────────────────────────────
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+  try {
+
+    supabase = await waitForSupabase();
+
+    await loadUser();
+
+    setupUI();
+
+    await loadTareas();
+
+    subscribeRealtime();
+
+    console.log("ONCE CORE tareas inicializado");
+
+  } catch (err) {
+
+    console.error("Error inicializando:", err);
+
+  }
+
+});
+
+
+// ───────────────────────────────────────────────────────
+// Usuario actual
+// ───────────────────────────────────────────────────────
+
+async function loadUser() {
+
+  const { data, error } =
+    await supabase.auth.getSession();
+
+  if (error || !data.session) {
+
+    window.location.href = "../login/login.html";
+
+    return;
+
+  }
+
+  currentUser = data.session.user;
+
+}
+
+
+// ───────────────────────────────────────────────────────
+// UI setup
+// ───────────────────────────────────────────────────────
+
+function setupUI() {
+
+  UI.publishBtn?.addEventListener(
+    "click",
+    publishTarea
+  );
+
+  UI.tabMias?.addEventListener(
+    "click",
+    () => switchTab("mias")
+  );
+
+  UI.tabTodas?.addEventListener(
+    "click",
+    () => switchTab("todas")
+  );
+
+  document
+    .querySelectorAll(".priority-btn")
+    .forEach(btn => {
+
+      btn.onclick = () => {
+
+        document
+          .querySelectorAll(".priority-btn")
+          .forEach(b =>
+            b.classList.remove("active")
+          );
+
+        btn.classList.add("active");
+
+        selectedPriority = btn.dataset.p;
+
+      };
+
+    });
+
+}
+
+
+// ───────────────────────────────────────────────────────
+// Cargar tareas
 // ───────────────────────────────────────────────────────
 
 async function loadTareas() {
 
-  tareasCache = await sbGetTareas();
+  const { data, error } =
+    await supabase
+      .from("tareas")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+  if (error) {
+
+    console.error(error);
+
+    showToast("Error cargando tareas");
+
+    return;
+
+  }
+
+  tareasCache = data;
 
   renderTareas();
 
@@ -103,51 +190,47 @@ async function loadTareas() {
 
 
 // ───────────────────────────────────────────────────────
-// Publicar tarea
+// Crear tarea
 // ───────────────────────────────────────────────────────
 
 async function publishTarea() {
 
   const title =
-    document.getElementById("ntTitle")?.value.trim();
+    UI.ntTitle.value.trim();
 
   if (!title) {
+
     showToast("Escribe un título");
+
     return;
+
   }
-
-  const subject =
-    document.getElementById("ntSubject")?.value.trim();
-
-  const due =
-    document.getElementById("ntDue")?.value;
-
-  const desc =
-    document.getElementById("ntDesc")?.value.trim();
 
   const tarea = {
 
     title: title,
 
-    subject: subject || "General",
+    subject:
+      UI.ntSubject.value || "General",
 
-    description: desc || "",
+    description:
+      UI.ntDesc.value || "",
 
-    due: due || null,
+    due:
+      UI.ntDue.value || null,
 
-    priority: selectedPriority,
+    priority:
+      selectedPriority,
 
-    autor_id: currentUser.email,
+    autor_id:
+      currentUser.id,
 
-    autor_name:
-      currentProfile?.name ||
+    autor_email:
       currentUser.email,
 
-    autor_avatar:
-      currentProfile?.avatar || "",
-
-    autor_family:
-      currentProfile?.family || "",
+    autor_name:
+      currentUser.user_metadata?.name
+      || currentUser.email,
 
     suertes: [],
 
@@ -157,7 +240,20 @@ async function publishTarea() {
 
   };
 
-  await sbCreateTarea(tarea);
+  const { error } =
+    await supabase
+      .from("tareas")
+      .insert(tarea);
+
+  if (error) {
+
+    console.error(error);
+
+    showToast("Error publicando");
+
+    return;
+
+  }
 
   clearForm();
 
@@ -167,15 +263,12 @@ async function publishTarea() {
 
 
 // ───────────────────────────────────────────────────────
-// Render
+// Render tareas
 // ───────────────────────────────────────────────────────
 
 function renderTareas() {
 
-  const container =
-    document.getElementById("tareasContainer");
-
-  if (!container) return;
+  if (!UI.container) return;
 
   let tareas = tareasCache;
 
@@ -183,23 +276,23 @@ function renderTareas() {
 
     tareas =
       tareas.filter(
-        t => t.autor_id === currentUser.email
+        t => t.autor_id === currentUser.id
       );
 
   }
 
   if (tareas.length === 0) {
 
-    container.innerHTML =
+    UI.container.innerHTML =
       `<div class="tareas-empty">
-        Sin tareas publicadas
-       </div>`;
+        Sin tareas
+      </div>`;
 
     return;
 
   }
 
-  container.innerHTML =
+  UI.container.innerHTML =
     tareas.map(buildCard).join("");
 
   bindEvents();
@@ -208,13 +301,13 @@ function renderTareas() {
 
 
 // ───────────────────────────────────────────────────────
-// Card
+// Card HTML
 // ───────────────────────────────────────────────────────
 
 function buildCard(t) {
 
   const isOwn =
-    t.autor_id === currentUser.email;
+    t.autor_id === currentUser.id;
 
   const suertes =
     t.suertes?.length || 0;
@@ -224,21 +317,22 @@ function buildCard(t) {
 
   return `
 
-    <div class="tarea-card">
+  <div class="tarea-card">
 
-      <div class="tarea-title">
-        ${escapeHtml(t.title)}
-      </div>
+    <div class="tarea-title">
+      ${escapeHtml(t.title)}
+    </div>
 
-      <div class="tarea-author">
-        ${escapeHtml(t.autor_name)}
-      </div>
+    <div class="tarea-author">
+      ${escapeHtml(t.autor_name)}
+    </div>
 
-      <div class="tarea-actions">
+    <div class="tarea-actions">
 
-        ${
-          !isOwn
-          ? `
+      ${
+        isOwn
+        ? `<span>Tuya</span>`
+        : `
           <button
             class="btn-suerte"
             data-id="${t.id}">
@@ -250,13 +344,12 @@ function buildCard(t) {
             data-id="${t.id}">
             🤝 ${ayudas}
           </button>
-          `
-          : `<span>Tuya</span>`
-        }
-
-      </div>
+        `
+      }
 
     </div>
+
+  </div>
 
   `;
 
@@ -264,28 +357,28 @@ function buildCard(t) {
 
 
 // ───────────────────────────────────────────────────────
-// Eventos
+// Eventos botones
 // ───────────────────────────────────────────────────────
 
 function bindEvents() {
 
   document
-  .querySelectorAll(".btn-suerte")
-  .forEach(btn => {
+    .querySelectorAll(".btn-suerte")
+    .forEach(btn => {
 
-    btn.onclick =
-      () => sendSuerte(btn.dataset.id);
+      btn.onclick =
+        () => sendSuerte(btn.dataset.id);
 
-  });
+    });
 
   document
-  .querySelectorAll(".btn-ayuda")
-  .forEach(btn => {
+    .querySelectorAll(".btn-ayuda")
+    .forEach(btn => {
 
-    btn.onclick =
-      () => sendAyuda(btn.dataset.id);
+      btn.onclick =
+        () => sendAyuda(btn.dataset.id);
 
-  });
+    });
 
 }
 
@@ -294,12 +387,26 @@ function bindEvents() {
 // Suerte
 // ───────────────────────────────────────────────────────
 
-async function sendSuerte(tareaId) {
+async function sendSuerte(id) {
 
-  await sbAddSuerte(
-    tareaId,
-    currentUser.email
-  );
+  const tarea =
+    tareasCache.find(t => t.id == id);
+
+  if (!tarea) return;
+
+  const suertes =
+    tarea.suertes || [];
+
+  if (
+    suertes.includes(currentUser.id)
+  ) return;
+
+  suertes.push(currentUser.id);
+
+  await supabase
+    .from("tareas")
+    .update({ suertes })
+    .eq("id", id);
 
 }
 
@@ -308,28 +415,30 @@ async function sendSuerte(tareaId) {
 // Ayuda
 // ───────────────────────────────────────────────────────
 
-async function sendAyuda(tareaId) {
+async function sendAyuda(id) {
 
-  const ayuda = {
+  const tarea =
+    tareasCache.find(t => t.id == id);
 
-    email:
-      currentUser.email,
+  if (!tarea) return;
 
-    nombre:
-      currentProfile?.name,
+  const ayudas =
+    tarea.ayudas || [];
 
-    mensaje:
-      "Apoyo enviado",
+  ayudas.push({
 
-    ts:
-      Date.now()
+    user_id: currentUser.id,
 
-  };
+    email: currentUser.email,
 
-  await sbAddAyuda(
-    tareaId,
-    ayuda
-  );
+    ts: Date.now()
+
+  });
+
+  await supabase
+    .from("tareas")
+    .update({ ayudas })
+    .eq("id", id);
 
 }
 
@@ -340,11 +449,24 @@ async function sendAyuda(tareaId) {
 
 function subscribeRealtime() {
 
-  sbSubscribeTareas(() => {
+  supabase
+    .channel("tareas_channel")
 
-    loadTareas();
+    .on(
 
-  });
+      "postgres_changes",
+
+      {
+        event: "*",
+        schema: "public",
+        table: "tareas"
+      },
+
+      () => loadTareas()
+
+    )
+
+    .subscribe();
 
 }
 
@@ -363,10 +485,10 @@ function switchTab(tab) {
 
 function clearForm() {
 
-  document.getElementById("ntTitle").value = "";
-  document.getElementById("ntSubject").value = "";
-  document.getElementById("ntDue").value = "";
-  document.getElementById("ntDesc").value = "";
+  UI.ntTitle.value = "";
+  UI.ntSubject.value = "";
+  UI.ntDue.value = "";
+  UI.ntDesc.value = "";
 
 }
 
@@ -382,6 +504,6 @@ function escapeHtml(text) {
 
 function showToast(msg) {
 
-  console.log(msg);
+  console.log("[ONCE CORE]", msg);
 
 }
