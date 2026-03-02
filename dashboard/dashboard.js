@@ -1,20 +1,49 @@
 // ONCE CORE — Dashboard Controller
 // Bridgerton Edition
 
-// =========================
-// Protección de sesión
-// =========================
-if (localStorage.getItem("session") !== "active") {
-  window.location.href = "../login/login.html";
+// ════════════════════════════════════════════════
+// Protección de sesión REAL (Supabase)
+// ════════════════════════════════════════════════
+
+let CURRENT_USER = null;
+let CURRENT_PROFILE = null;
+
+async function requireAuth() {
+
+  const session = await sbGetSession();
+
+  if (!session) {
+    window.location.href = "../login/login.html";
+    return;
+  }
+
+  const user = await sbGetUser();
+
+  if (!user) {
+    window.location.href = "../login/login.html";
+    return;
+  }
+
+  CURRENT_USER = user;
+
+  // Obtener profile desde Supabase
+  try {
+    CURRENT_PROFILE = await sbGetProfile(user.id);
+  } catch {
+    CURRENT_PROFILE = null;
+  }
+
 }
+
+await requireAuth();
 
 document.addEventListener("DOMContentLoaded", () => {
 
   // =========================
   // Obtener datos
   // =========================
-  const profile = JSON.parse(localStorage.getItem("profile"));
-  const user    = JSON.parse(localStorage.getItem("user"));
+const profile = CURRENT_PROFILE;
+const user    = CURRENT_USER;
 
   // =========================
   // Sidebar
