@@ -1,25 +1,24 @@
-
+// ═══════════════════════════════════════════════════
+// ONCE CORE — Supabase Client (Singleton seguro)
 // ═══════════════════════════════════════════════════
 
-const SUPABASE_URL      = "https://ahhsobmhtbhaweyibyew.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoaHNvYm1odGJoYXdleWlieWV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNDc3MjAsImV4cCI6MjA4NzgyMzcyMH0.to7D-IpREQaHDlLFc2oIlT2MFZaD4zaA1gVigArVoMo";
+// Evitar inicialización duplicada
+if (!window._supabase) {
 
-// Importamos el cliente de Supabase desde CDN
-// ═══════════════════════════════════════════════════
+  const SUPABASE_URL =
+    "https://ahhsobmhtbhaweyibyew.supabase.co";
 
-const SUPABASE_URL =
-  "https://ahhsobmhtbhaweyibyew.supabase.co";
+  const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoaHNvYm1odGJoYXdleWlieWV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNDc3MjAsImV4cCI6MjA4Nz7823720MH0.to7D-IpREQaHDlLFc2oIlT2MFZaD4zaA1gVigArVoMo";
 
-const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoaHNvYm1odGJoYXdleWlieWV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNDc3MjAsImV4cCI6MjA4NzgyMzcyMH0.to7D-IpREQaHDlLFc2oIlT2MFZaD4zaA1gVigArVoMo";
+  window._supabase = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
 
-// Crear cliente GLOBAL
-window._supabase = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
+}
 
-// Alias interno seguro
+// Alias interno
 const _supabase = window._supabase;
 
 // ── Auth helpers ──────────────────────────────────
