@@ -1,100 +1,179 @@
-// ═══════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════
 // ONCE CORE — Login Controller (Supabase Edition)
-// Auth real • Sesión persistente • Multi-dispositivo
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 
-
-// ─────────────────────────────────────────
-// Si ya hay sesión válida en Supabase
-// ─────────────────────────────────────────
-document.addEventListener("DOMContentLoaded", async () => {
-
-  const user = await sbGetUser();
-
-  if (user) {
+// =========================
+// Si ya hay sesión activa → ir al dashboard
+// =========================
+(async () => {
+  const session = await sbGetSession();
+  if (session) {
     window.location.href = "../dashboard/dashboard.html";
   }
+})();
 
+// =========================
+// ELEMENTOS
+// =========================
+const tabLogin         = document.getElementById("tabLogin");
+const tabRegister      = document.getElementById("tabRegister");
+
+const formLogin        = document.getElementById("formLogin");
+const formRegister     = document.getElementById("formRegister");
+
+const loginEmail       = document.getElementById("loginEmail");
+const loginPassword    = document.getElementById("loginPassword");
+const loginStatus      = document.getElementById("loginStatus");
+const loginBtn         = document.getElementById("loginBtn");
+
+const regEmail         = document.getElementById("regEmail");
+const regPassword      = document.getElementById("regPassword");
+const regPasswordConfirm = document.getElementById("regPasswordConfirm");
+const registerStatus   = document.getElementById("registerStatus");
+const registerBtn      = document.getElementById("registerBtn");
+
+// =========================
+// UI helpers
+// =========================
+
+function setStatus(el, msg, type = "") {
+  if (!el) return;
+  el.textContent = msg;
+  el.className = "status-msg " + type;
+}
+
+function clearStatus() {
+  setStatus(loginStatus, "");
+  setStatus(registerStatus, "");
+}
+
+function markError(input) {
+  input?.classList.add("error");
+}
+
+function markSuccess(input) {
+  input?.classList.remove("error");
+  input?.classList.add("success");
+}
+
+// =========================
+// Tabs
+// =========================
+
+tabLogin?.addEventListener("click", () => {
+  tabLogin.classList.add("active");
+  tabRegister.classList.remove("active");
+
+  formLogin.classList.remove("hidden");
+  formRegister.classList.add("hidden");
+
+  clearStatus();
 });
 
+tabRegister?.addEventListener("click", () => {
+  tabRegister.classList.add("active");
+  tabLogin.classList.remove("active");
 
-// ─────────────────────────────────────────
-// Elementos
-// ─────────────────────────────────────────
-const tabLogin    = document.getElementById("tabLogin");
-const tabRegister = document.getElementById("tabRegister");
-const formLogin   = document.getElementById("formLogin");
-const formRegister= document.getElementById("formRegister");
+  formRegister.classList.remove("hidden");
+  formLogin.classList.add("hidden");
 
-const loginEmail    = document.getElementById("loginEmail");
-const loginPassword = document.getElementById("loginPassword");
-const loginBtn      = document.getElementById("loginBtn");
+  clearStatus();
+});
 
-const regEmail          = document.getElementById("regEmail");
-const regPassword       = document.getElementById("regPassword");
-const regPasswordConfirm= document.getElementById("regPasswordConfirm");
-const registerBtn       = document.getElementById("registerBtn");
-
-
-// ─────────────────────────────────────────
+// =========================
 // LOGIN REAL
-// ─────────────────────────────────────────
+// =========================
+
 loginBtn?.addEventListener("click", async () => {
 
   const email = loginEmail.value.trim();
-  const pass  = loginPassword.value;
+  const password = loginPassword.value;
 
-  if (!email || !pass) {
-    alert("Completa todos los campos");
+  if (!email || !password) {
+    setStatus(loginStatus, "Completa todos los campos.", "error");
     return;
   }
 
+  loginBtn.disabled = true;
+  setStatus(loginStatus, "Entrando...", "");
+
   try {
 
-    await sbSignIn(email, pass);
+    const user = await sbSignIn(email, password);
 
-    window.location.href = "../dashboard/dashboard.html";
+    markSuccess(loginEmail);
+    markSuccess(loginPassword);
+
+    setStatus(loginStatus, "✓ Sesión iniciada.", "success");
+
+    setTimeout(() => {
+      window.location.href = "../dashboard/dashboard.html";
+    }, 700);
 
   } catch (err) {
 
-    alert("Credenciales incorrectas");
+    console.error(err);
+
+    setStatus(loginStatus, err.message, "error");
+
+    loginBtn.disabled = false;
 
   }
 
 });
 
-
-// ─────────────────────────────────────────
+// =========================
 // REGISTRO REAL
-// ─────────────────────────────────────────
+// =========================
+
 registerBtn?.addEventListener("click", async () => {
 
   const email = regEmail.value.trim();
-  const pass  = regPassword.value;
-  const pass2 = regPasswordConfirm.value;
+  const password = regPassword.value;
+  const password2 = regPasswordConfirm.value;
 
-  if (!email || !pass || !pass2) {
-    alert("Completa todos los campos");
+  if (!email || !password || !password2) {
+    setStatus(registerStatus, "Completa todos los campos.", "error");
     return;
   }
 
-  if (pass !== pass2) {
-    alert("Las contraseñas no coinciden");
+  if (password !== password2) {
+    setStatus(registerStatus, "Las contraseñas no coinciden.", "error");
     return;
   }
+
+  if (password.length < 6) {
+    setStatus(registerStatus, "Mínimo 6 caracteres.", "error");
+    return;
+  }
+
+  registerBtn.disabled = true;
+
+  setStatus(registerStatus, "Creando cuenta...", "");
 
   try {
 
-    await sbSignUp(email, pass);
+    await sbSignUp(email, password);
 
-    alert("Cuenta creada. Ahora inicia sesión.");
+    setStatus(registerStatus, "✓ Cuenta creada. Ahora inicia sesión.", "success");
 
-    tabLogin.click();
+    setTimeout(() => {
+      tabLogin.click();
+      loginEmail.value = email;
+      loginPassword.focus();
+      registerBtn.disabled = false;
+    }, 1000);
 
   } catch (err) {
 
-    alert("Error creando cuenta");
+    console.error(err);
+
+    setStatus(registerStatus, err.message, "error");
+
+    registerBtn.disabled = false;
 
   }
 
 });
+```
