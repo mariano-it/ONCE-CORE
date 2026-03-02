@@ -1,117 +1,59 @@
-// ONCE CORE — Rooms Controller
-// Supabase Edition
+// ═══════════════════════════════════════════════════════
+// ONCE CORE — Rooms Controller (Supabase Edition)
+// Realtime • Persistente • Multiusuario real
+// ═══════════════════════════════════════════════════════
 
 // =========================
-// Protección de acceso
+// Estado global
 // =========================
-let user = JSON.parse(localStorage.getItem("user"));
+let user = null;
+let profile = null;
+let rooms = [];
 
-if (!user) {
-  window.location.href = "../login/login.html";
-}
-
-// =========================
-// UI refs
-// =========================
 const roomsList = document.getElementById("roomsList");
 const createRoomBtn = document.getElementById("createRoomBtn");
 const roomNameInput = document.getElementById("roomName");
 const topbarUser = document.getElementById("topbarUser");
 
-// =========================
-// Estado
-// =========================
-let rooms = [];
 
-// =========================
-// Mostrar usuario
-// =========================
-const profile = JSON.parse(localStorage.getItem("profile"));
+// ═══════════════════════════════════════════════════════
+// Inicialización segura
+// ═══════════════════════════════════════════════════════
 
-if (topbarUser) {
-  topbarUser.textContent =
-    profile?.name ||
-    user.email ||
-    "Invitada";
-}
+async function initializeRoomsPage() {
 
-// =========================
-// Render
-// =========================
-function renderRooms() {
+  // Obtener usuario real desde Supabase
+  user = await sbGetUser();
 
-  if (!roomsList) return;
-
-  roomsList.innerHTML = "";
-
-  if (rooms.length === 0) {
-    roomsList.innerHTML = `
-      <div class="empty-rooms">
-        <div class="empty-rooms-icon">🕯️</div>
-        <div class="empty-rooms-text">
-          No hay salones disponibles. ¡Sé la primera en abrir uno!
-        </div>
-      </div>
-    `;
+  if (!user) {
+    window.location.href = "../login/login.html";
     return;
   }
 
-  rooms.forEach((room, index) => {
+  // Obtener perfil
+  profile = await sbGetProfile(user.id);
 
-    const members = room.members || [];
-    const memberCount = members.length;
+  // Mostrar nombre
+  if (topbarUser) {
+    topbarUser.textContent =
+      profile?.name ||
+      user.email ||
+      "Invitada";
+  }
 
-    const activeUser = members.find(m => m.status === "En enfoque");
+  // Cargar salas
+  await loadRooms();
 
-    const card = document.createElement("div");
-
-    card.className = "room-card";
-
-    card.innerHTML = `
-      <div class="room-card-header">
-
-        <div class="room-name">
-          ${room.name}
-        </div>
-
-        <div class="room-badge ${activeUser ? "active" : "idle"}">
-          ${activeUser ? "En sesión" : "Disponible"}
-        </div>
-
-      </div>
-
-      <div class="room-divider"></div>
-
-      <div class="room-members">
-        ◈ ${memberCount} ${memberCount === 1 ? "miembro" : "miembros"}
-      </div>
-
-      <div class="room-status">
-
-        ${
-          activeUser
-            ? activeUser.name + " está en enfoque"
-            : "Sin actividad activa"
-        }
-
-      </div>
-
-      <div class="room-enter-hint">
-        ENTRAR →
-      </div>
-    `;
-
-    card.onclick = () => joinRoom(room);
-
-    roomsList.appendChild(card);
-
-  });
+  // Activar realtime
+  subscribeRealtime();
 
 }
 
-// =========================
+
+// ═══════════════════════════════════════════════════════
 // Cargar salas desde Supabase
-// =========================
+// ═══════════════════════════════════════════════════════
+
 async function loadRooms() {
 
   try {
@@ -120,55 +62,165 @@ async function loadRooms() {
 
     renderRooms();
 
-  }
-  catch (err) {
+  } catch (error) {
 
-    console.error("Error loading rooms:", err);
-
-  }
-
-}
-
-// =========================
-// Crear sala
-// =========================
-async function createRoom() {
-
-  const name = roomNameInput.value.trim();
-
-  if (!name) return;
-
-  try {
-
-    await sbCreateRoom(
-      name,
-      user.id,
-      profile?.name || user.email
-    );
-
-    roomNameInput.value = "";
-
-  }
-  catch (err) {
-
-    console.error("Error creating room:", err);
+    console.error("Error cargando salas:", error);
 
   }
 
 }
 
-// =========================
-// Entrar
-// =========================
-async function joinRoom(room) {
 
-  await sbJoinRoom(room.id, {
+// ═══════════════════════════════════════════════════════
+// Render de salas
+// ═══════════════════════════════════════════════════════
 
-    id: user.id,
-    name: profile?.name || user.email,
-    status: "Disponible"
+function renderRooms() {
+
+  if (!roomsList) return;
+
+  roomsList.innerHTML = "";
+
+  if (!rooms || rooms.length === 0) {
+
+    roomsList.innerHTML = `
+      <div class="empty-rooms">
+        <div class="empty-rooms-icon">🕯️</div>
+        <div class="empty-rooms-text">
+          No hay salones disponibles. ¡Sé la primera en abrir uno!
+        </div>
+      </div>
+    `;
+
+    return;
+
+  }
+
+  rooms.forEach((room, index) => {
+
+    const card = document.createElement("div");
+
+    card.className = "room-card";
+
+    card.style.animationDelay = (index * 0.05) + "s";
+
+
+    const members = room.members || [];
+
+    const activeUser = members.find(m => m.status === "En enfoque");
+
+    const memberCount = members.length;
+
+    const isActive = !!activeUser;
+
+
+    card.innerHTML = `
+
+      <div class="room-card-header">
+
+        <div class="room-name">
+          ${escapeHtml(room.name)}
+        </div>
+
+        <div class="room-badge ${isActive ? "active" : "idle"}">
+          ${isActive ? "En sesión" : "Disponible"}
+        </div>
+
+      </div>
+
+      <div class="room-divider"></div>
+
+      <div class="room-members">
+        <span class="member-icon">◈</span>
+        ${memberCount} ${memberCount === 1 ? "miembro" : "miembros"}
+      </div>
+
+      <div class="room-status ${isActive ? "has-focus" : ""}">
+        ${
+          isActive
+            ? escapeHtml(activeUser.name) + " está en enfoque"
+            : "Sin actividad activa"
+        }
+      </div>
+
+      <div class="room-enter-hint">
+        ENTRAR →
+      </div>
+
+    `;
+
+
+    card.addEventListener("click", () => enterRoom(room));
+
+    roomsList.appendChild(card);
 
   });
+
+}
+
+
+// ═══════════════════════════════════════════════════════
+// Crear sala
+// ═══════════════════════════════════════════════════════
+
+if (createRoomBtn) {
+
+  createRoomBtn.addEventListener("click", async () => {
+
+    try {
+
+      const name = roomNameInput.value.trim();
+
+      if (!name) {
+        roomNameInput.focus();
+        return;
+      }
+
+      await sbCreateRoom(
+
+        name,
+
+        user.id,
+
+        profile?.name || user.email
+
+      );
+
+      roomNameInput.value = "";
+
+      await loadRooms();
+
+    } catch (error) {
+
+      console.error("Error creando sala:", error);
+
+      alert("Error creando sala");
+
+    }
+
+  });
+
+}
+
+
+// Enter para crear sala
+
+roomNameInput?.addEventListener("keydown", (e) => {
+
+  if (e.key === "Enter") {
+
+    createRoomBtn.click();
+
+  }
+
+});
+
+
+// ═══════════════════════════════════════════════════════
+// Entrar a sala
+// ═══════════════════════════════════════════════════════
+
+function enterRoom(room) {
 
   localStorage.setItem("currentRoomId", room.id);
 
@@ -176,32 +228,42 @@ async function joinRoom(room) {
 
 }
 
-// =========================
-// Eventos
-// =========================
-createRoomBtn?.addEventListener(
-  "click",
-  createRoom
-);
 
-roomNameInput?.addEventListener(
-  "keydown",
-  e => {
-    if (e.key === "Enter")
-      createRoom();
-  }
-);
+// ═══════════════════════════════════════════════════════
+// Realtime
+// ═══════════════════════════════════════════════════════
 
-// =========================
-// Suscripción realtime
-// =========================
-sbSubscribeRooms(() => {
+function subscribeRealtime() {
 
-  loadRooms();
+  sbSubscribeRooms(() => {
 
-});
+    loadRooms();
 
-// =========================
-// Init
-// =========================
-loadRooms();
+  });
+
+}
+
+
+// ═══════════════════════════════════════════════════════
+// Seguridad
+// ═══════════════════════════════════════════════════════
+
+function escapeHtml(text) {
+
+  if (!text) return "";
+
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+// ═══════════════════════════════════════════════════════
+// Start
+// ═══════════════════════════════════════════════════════
+
+initializeRoomsPage();
