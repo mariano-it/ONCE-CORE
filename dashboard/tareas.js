@@ -29,7 +29,7 @@ const UI = {
 // Estado global
 // ───────────────────────────────────────────────────────
 
-let supabase = null;
+const supabase = window._supabase;
 
 let currentUser = null;
 
